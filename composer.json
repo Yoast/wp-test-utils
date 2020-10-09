@@ -31,6 +31,11 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "autoload-dev" : {
+        "psr-4": {
+            "Yoast\\WPTestUtils\\Tests\\": "tests/"
+        }
+    },
     "extra": {
         "branch-alias": {
             "dev-main": "1.x-dev",
@@ -46,6 +51,15 @@
         ],
         "fix-cs": [
             "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf"
+        ],
+        "test": [
+            "@php ./vendor/phpunit/phpunit/phpunit --no-coverage"
+        ],
+        "coverage": [
+            "@php ./vendor/phpunit/phpunit/phpunit"
+        ],
+        "coverage-local": [
+            "@php ./vendor/phpunit/phpunit/phpunit --coverage-html ./build/coverage-html"
         ]
     }
 }
