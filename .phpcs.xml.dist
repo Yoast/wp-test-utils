@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Coding Standard for WP Test Utils" xsi:noNamespaceSchemaLocation="./vendor/squizlabs/php_codesniffer/phpcs.xsd">
+    <description>Check the code of WP Test Utils.</description>
+
+    <!--
+    #############################################################################
+    COMMAND LINE ARGUMENTS
+    https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-ruleset.xml
+    #############################################################################
+    -->
+
+    <file>.</file>
+
+    <!-- Only check PHP files. -->
+    <arg name="extensions" value="php"/>
+
+    <!-- Show progress, show the error codes for each message (source). -->
+    <arg value="ps"/>
+
+    <!-- Strip the filepaths down to the relevant bit. -->
+    <arg name="basepath" value="./"/>
+
+    <!-- Check up to 8 files simultaneously. -->
+    <arg name="parallel" value="8"/>
+
+	<!-- Cache the results between runs. -->
+	<arg name="cache" value="./.cache/phpcs.cache"/>
+
+
+	<!--
+	#############################################################################
+	USE THE YoastCS RULESET
+	#############################################################################
+	-->
+
+	<rule ref="Yoast">
+		<!-- Use CamelCaps file names to be more in line with the naming conventions used in PHPUnit. -->
+		<exclude name="Yoast.Files.FileName"/>
+
+		<!-- The code in this package is not run in the context of a plugin. -->
+		<exclude name="WordPress.WP.AlternativeFunctions"/>
+		<exclude name="Yoast.Yoast.AlternativeFunctions"/>
+	</rule>
+
+	<!-- Enforce PSR1 compatible namespaces. -->
+	<rule ref="PSR1.Classes.ClassDeclaration"/>
+
+
+	<!--
+	#############################################################################
+	SNIFF SPECIFIC CONFIGURATION
+	#############################################################################
+	-->
+
+	<rule ref="Yoast.NamingConventions.NamespaceName">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="Yoast\WPTestUtils"/>
+			</property>
+			<property name="src_directory" type="array">
+				<element value="src"/>
+			</property>
+		</properties>
+	</rule>
+
+</ruleset>
