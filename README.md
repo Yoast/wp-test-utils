@@ -1,7 +1,7 @@
 WP Test Utils
 =====================================================
 
-[![Latest Stable Version](https://poser.pugx.org/yoast/wp-test-utils/v/stable)](https://packagist.org/packages/yoast/wp-test-utils)
+[![Version](https://poser.pugx.org/yoast/wp-test-utils/version)](https://packagist.org/packages/yoast/wp-test-utils)
 [![Travis Build Status](https://travis-ci.com/Yoast/wp-test-utils.svg?branch=main)](https://travis-ci.com/Yoast/wp-test-utils/branches)
 [![Minimum PHP Version](https://img.shields.io/packagist/php-v/yoast/wp-test-utils.svg?maxAge=3600)](https://packagist.org/packages/yoast/wp-test-utils)
 [![License: BSD3](https://poser.pugx.org/yoast/wp-test-utils/license)](https://github.com/Yoast/wp-test-utils/blob/master/LICENSE)
