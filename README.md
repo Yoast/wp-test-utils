@@ -149,8 +149,8 @@ Implementation example:
 ```php
 <?php
 // File: tests/bootstrap.php
-include_once dirname( __DIR__ ) . '/vendor/yoast/wp-test-utils/src/BrainMonkey/bootstrap.php';
-include_once dirname( __DIR__ ) . '/vendor/autoload.php';
+require_once dirname( __DIR__ ) . '/vendor/yoast/wp-test-utils/src/BrainMonkey/bootstrap.php';
+require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 ```
 
 To tell PHPUnit to use this bootstrap file, use `--bootstrap tests/bootstrap.php` on the command-line or add the `bootstrap="tests/bootstrap.php"` attribute to your `phpunit.xml.dist` file.
