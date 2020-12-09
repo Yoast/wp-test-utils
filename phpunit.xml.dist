@@ -18,6 +18,7 @@
         <whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="false">
             <directory suffix=".php">./src/</directory>
             <exclude>
+                <file>./src/BrainMonkey/bootstrap.php</file>
                 <!-- The functionality within these files cannot be tested without installing WP. -->
                 <file>./src/WPIntegration/bootstrap-functions.php</file>
                 <file>./src/WPIntegration/Autoload.php</file>
