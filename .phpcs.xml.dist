@@ -90,4 +90,12 @@
 		<exclude-pattern>/src/*/bootstrap*\.php$</exclude-pattern>
 	</rule>
 
+	<!-- Allow for camelCase method and variable names to be more in line with PHPUnit and BrainMonkey. -->
+	<rule ref="WordPress.NamingConventions.ValidFunctionName">
+		<exclude-pattern>/src/Helpers/*\.php$</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.NamingConventions.ValidVariableName">
+		<exclude-pattern>/src/Helpers/*\.php$</exclude-pattern>
+	</rule>
+
 </ruleset>

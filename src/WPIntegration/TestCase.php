@@ -12,6 +12,7 @@ use Yoast\PHPUnitPolyfills\Polyfills\AssertStringContains;
 use Yoast\PHPUnitPolyfills\Polyfills\ExpectExceptionMessageMatches;
 use Yoast\PHPUnitPolyfills\Polyfills\ExpectExceptionObject;
 use Yoast\PHPUnitPolyfills\Polyfills\ExpectPHPException;
+use Yoast\WPTestUtils\Helpers\ExpectOutputHelper;
 
 /**
  * Basic test case for use with a WP Integration test test suite.
@@ -32,6 +33,7 @@ abstract class TestCase extends WP_UnitTestCase {
 	use AssertStringContains;
 	use ExpectExceptionMessageMatches;
 	use ExpectExceptionObject;
+	use ExpectOutputHelper;
 	use ExpectPHPException;
 
 }

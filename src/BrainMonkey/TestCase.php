@@ -6,12 +6,14 @@ use Brain\Monkey;
 use Brain\Monkey\Functions;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase as Polyfill_TestCase;
+use Yoast\WPTestUtils\Helpers\ExpectOutputHelper;
 
 /**
  * Basic test case for use with a BrainMonkey based test suite.
  */
 abstract class TestCase extends Polyfill_TestCase {
 
+	use ExpectOutputHelper;
 	// Adds Mockery expectations to the PHPUnit assertions count.
 	use MockeryPHPUnitIntegration;
 
