@@ -63,6 +63,20 @@
 		</properties>
 	</rule>
 
+	<rule ref="WordPress.Arrays.MultipleStatementAlignment">
+		<properties>
+			<property name="maxColumn" value="72"/>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.PHP.NoSilencedErrors">
+		<properties>
+			<property name="custom_whitelist" type="array">
+				<element value="file_exists"/>
+			</property>
+		</properties>
+	</rule>
+
 
 	<!--
 	#############################################################################
@@ -73,7 +87,7 @@
 
 	<!-- Allow filecomments in file which don't contain OO declarations. -->
 	<rule ref="Yoast.Commenting.FileComment.Unnecessary">
-		<exclude-pattern>/src/*/bootstrap\.php$</exclude-pattern>
+		<exclude-pattern>/src/*/bootstrap*\.php$</exclude-pattern>
 	</rule>
 
 </ruleset>
