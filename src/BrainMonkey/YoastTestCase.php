@@ -41,24 +41,6 @@ abstract class YoastTestCase extends TestCase {
 				'number_format_i18n'   => null,
 				'sanitize_text_field'  => null,
 				'site_url'             => 'https://www.example.org',
-
-				/*
-				 * This stub can be removed once PR {@link https://github.com/Brain-WP/BrainMonkey/pull/86}
-				 * has been merged and included in a new tagged release and the minimum supported version
-				 * of the BrainMonkey package has been upped to that tagged release.
-				 */
-				'user_trailingslashit' => static function( $string ) {
-					return \trailingslashit( $string );
-				},
-
-				/*
-				 * This stub can be removed once PR {@link https://github.com/Brain-WP/BrainMonkey/pull/86}
-				 * has been merged and included in a new tagged release and the minimum supported version
-				 * of the BrainMonkey package has been upped to that tagged release.
-				 */
-				'wp_json_encode'       => static function( $data, $options = 0, $depth = 512 ) {
-					return \json_encode( $data, $options, $depth );
-				},
 				'wp_kses_post'         => null,
 				'wp_parse_args'        => static function ( $settings, $defaults ) {
 					return \array_merge( $defaults, $settings );

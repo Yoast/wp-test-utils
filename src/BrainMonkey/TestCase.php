@@ -46,9 +46,6 @@ abstract class TestCase extends Polyfill_TestCase {
 	 * which does apply some form of escaping to the input if the function called is a
 	 * "translate and escape" function.
 	 *
-	 * Note: Support for the `_n()` and `_nx()` functions was only added to BrainMonkey
-	 * itself in version 2.6.0.
-	 *
 	 * @return void
 	 */
 	public function stubTranslationFunctions() {
@@ -83,9 +80,6 @@ abstract class TestCase extends Polyfill_TestCase {
 	 *
 	 * Alternative to the BrainMonkey `Monkey\Functions\stubEscapeFunctions()` function
 	 * which does apply some form of escaping to the input.
-	 *
-	 * Note: Support for the `esc_xml()` function was only added to BrainMonkey
-	 * itself in version 2.6.0.
 	 *
 	 * @return void
 	 */
