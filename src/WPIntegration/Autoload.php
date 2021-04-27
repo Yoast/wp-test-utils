@@ -35,11 +35,11 @@ final class Autoload {
 	/**
 	 * Loads a class.
 	 *
-	 * @param string $class The name of the class to load.
+	 * @param string $class_name The name of the class to load.
 	 *
 	 * @return bool
 	 */
-	public static function load( $class ) {
+	public static function load( $class_name ) {
 
 		if ( \PHP_VERSION_ID < 80000 ) {
 			// This autoloader is only needed when the tests are being run on PHP >= 8.0.
@@ -55,7 +55,7 @@ final class Autoload {
 			return false;
 		}
 
-		if ( isset( self::$supported_classes[ $class ] ) === false ) {
+		if ( isset( self::$supported_classes[ $class_name ] ) === false ) {
 			// Bow out, not a class this autoloader handles.
 			return false;
 		}
@@ -67,7 +67,7 @@ final class Autoload {
 		}
 
 		// Try getting the overloaded file as included in WP 5.6/master.
-		$relative_filename = \strtr( \substr( $class, 18 ), '\\', \DIRECTORY_SEPARATOR ) . '.php';
+		$relative_filename = \strtr( \substr( $class_name, 18 ), '\\', \DIRECTORY_SEPARATOR ) . '.php';
 		$file              = \realpath( $wp_test_dir . 'includes/phpunit7/' . $relative_filename );
 
 		if ( $file === false || @\file_exists( $file ) === false ) {
