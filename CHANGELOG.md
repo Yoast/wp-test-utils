@@ -9,6 +9,13 @@ This projects adheres to [Keep a CHANGELOG](http://keepachangelog.com/) and uses
 
 _Nothing yet._
 
+## [0.2.2] - 2021-06-21
+
+### Changed
+* The [PHPUnit Polyfills] dependency has been updated to require [version `^1.0.0`](https://github.com/Yoast/PHPUnit-Polyfills/releases/tag/1.0.0) (was `^0.2.0`).
+* Improved compatibility with the test setup as created via the WP CLI `scaffold` command.
+* CI is now run via GitHub Actions.
+
 
 ## [0.2.1] - 2020-12-09
 
@@ -40,6 +47,7 @@ Initial release.
 
 
 [Unreleased]: https://github.com/Yoast/wp-test-utils/compare/main...HEAD
+[0.2.2]: https://github.com/Yoast/wp-test-utils/compare/0.2.1...0.2.2
 [0.2.1]: https://github.com/Yoast/wp-test-utils/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/Yoast/wp-test-utils/compare/0.1.1...0.2.0
 [0.1.1]: https://github.com/Yoast/wp-test-utils/compare/0.1.0...0.1.1
