@@ -46,8 +46,7 @@ function get_path_to_wp_test_dir() {
 		$tests_dir = \realpath( $tests_dir );
 		if ( $tests_dir !== false ) {
 			$tests_dir = $normalize_path( $tests_dir ) . '/';
-			if ( \substr( $tests_dir, -15 ) === '/tests/phpunit/'
-				&& \is_dir( $tests_dir ) === true
+			if ( \is_dir( $tests_dir ) === true
 				&& @\file_exists( $tests_dir . 'includes/bootstrap.php' )
 			) {
 				return $tests_dir;

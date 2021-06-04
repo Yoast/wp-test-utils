@@ -197,10 +197,16 @@ In comes WP Test Utils... which offers:
 
 The functionality within these files presumes three things:
 1. This package is installed as a dependency of a plugin via Composer and will be in the `vendor/yoast/wp-test-utils/` directory.
-2. WordPress itself is available in its entirety, inclusing the `tests` directory.
-3. Either the `WP_TESTS_DIR` environment variable (path to the WordPress Core `./tests/phpunit` directory) or the `WP_DEVELOP_DIR` environment variable (path to the WordPress Core root directory) will be set.
-    These environment variables can be set on the OS level or from within a `phpunit.xml[.dist]` file.
-    If neither of the environment variables is available, the plugin is presumed to be installed in a `src/wp-content/plugins/plugin-name` directory, with this package in the `src/wp-content/plugins/plugin-name/vendor/yoast/wp-test-utils` directory.
+2. WordPress itself is available in its entirety, including the `includes` subdirectory of the WP native `tests/phpunit` directory.
+3. The location of the test files from the WordPress installation is known.
+
+The location of the test files from the WordPress install can be made known in the following ways:
+1. Either set a `WP_TESTS_DIR` environment variable to the path to the WordPress Core `./tests/phpunit` directory; or a directory containing the `includes` subdirectory from the WordPress Core `./tests/phpunit` directory, such as created by the WP CLI `scaffold` command.
+2. Or set the `WP_DEVELOP_DIR` environment variable to the path to the WordPress Core root directory from a git/svn check-out.
+
+These environment variables can be set on the OS level or from within a `phpunit.xml[.dist]` file.
+
+If neither of the environment variables is available, the plugin is presumed to be installed within WordPress itself in a `src/wp-content/plugins/plugin-name` directory, with this package in the `src/wp-content/plugins/plugin-name/vendor/yoast/wp-test-utils` directory.
 
 This is in line with a typical integration test setup in the context of WordPress.
 
