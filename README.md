@@ -27,7 +27,7 @@ Requirements
 The following packages will be automatically required via Composer:
 * [PHPUnit Polyfills] 0.2.0 or higher.
 * [PHPUnit] 5.7 - 9.x.
-* [BrainMonkey] 2.5 or higher.
+* [BrainMonkey] 2.6 or higher.
 
 Installation
 -------------------------------------------
