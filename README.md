@@ -25,9 +25,9 @@ Requirements
 * PHP 5.6 or higher.
 
 The following packages will be automatically required via Composer:
-* [PHPUnit Polyfills] 0.2.0 or higher.
+* [PHPUnit Polyfills] 1.0.0 or higher.
 * [PHPUnit] 5.7 - 9.x.
-* [BrainMonkey] 2.6 or higher.
+* [BrainMonkey] 2.6.0 or higher.
 
 Installation
 -------------------------------------------
@@ -165,7 +165,7 @@ To tell PHPUnit to use this bootstrap file, use `--bootstrap tests/bootstrap.php
 Features of this `TestCase`:
 1. Extends the WP native base test case `WP_UnitTestCase`, making all the WP Core test utilities available to your integration test classes.
 2. Cross-version compatibility with PHPUnit 5.7 - 9.x via the [PHPUnit Polyfills] package.
-    _Note: WordPress Core limit tests to running on PHPUnit 7.5 max. However, using these polyfill you can already start using the up-to-date PHPUnit 9.x syntax, even though the tests don't use PHPUnit 9 yet._
+    _Note: WordPress Core limit tests to running on PHPUnit 7.5 max. However, using these polyfills you can already start using the up-to-date PHPUnit 9.x syntax, even though the tests don't use PHPUnit 9 yet._
 3. Helper functions for setting expectations for generated output.
 
 Implementation example:
