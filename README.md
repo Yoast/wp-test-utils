@@ -2,7 +2,8 @@ WP Test Utils
 =====================================================
 
 [![Version](https://poser.pugx.org/yoast/wp-test-utils/version)](https://packagist.org/packages/yoast/wp-test-utils)
-[![Travis Build Status](https://travis-ci.com/Yoast/wp-test-utils.svg?branch=main)](https://travis-ci.com/Yoast/wp-test-utils/branches)
+[![CS Build Status](https://github.com/Yoast/wp-test-utils/actions/workflows/cs.yml/badge.svg)](https://github.com/Yoast/wp-test-utils/actions/workflows/cs.yml)
+[![Test Build Status](https://github.com/Yoast/wp-test-utils/actions/workflows/test.yml/badge.svg)](https://github.com/Yoast/wp-test-utils/actions/workflows/test.yml)
 [![Minimum PHP Version](https://img.shields.io/packagist/php-v/yoast/wp-test-utils.svg?maxAge=3600)](https://packagist.org/packages/yoast/wp-test-utils)
 [![License: BSD3](https://poser.pugx.org/yoast/wp-test-utils/license)](https://github.com/Yoast/wp-test-utils/blob/master/LICENSE)
 
@@ -24,9 +25,9 @@ Requirements
 * PHP 5.6 or higher.
 
 The following packages will be automatically required via Composer:
-* [PHPUnit Polyfills] 0.2.0 or higher.
+* [PHPUnit Polyfills] 1.0.0 or higher.
 * [PHPUnit] 5.7 - 9.x.
-* [BrainMonkey] 2.5 or higher.
+* [BrainMonkey] 2.6.0 or higher.
 
 Installation
 -------------------------------------------
@@ -164,7 +165,7 @@ To tell PHPUnit to use this bootstrap file, use `--bootstrap tests/bootstrap.php
 Features of this `TestCase`:
 1. Extends the WP native base test case `WP_UnitTestCase`, making all the WP Core test utilities available to your integration test classes.
 2. Cross-version compatibility with PHPUnit 5.7 - 9.x via the [PHPUnit Polyfills] package.
-    _Note: WordPress Core limit tests to running on PHPUnit 7.5 max. However, using these polyfill you can already start using the up-to-date PHPUnit 9.x syntax, even though the tests don't use PHPUnit 9 yet._
+    _Note: WordPress Core limit tests to running on PHPUnit 7.5 max. However, using these polyfills you can already start using the up-to-date PHPUnit 9.x syntax, even though the tests don't use PHPUnit 9 yet._
 3. Helper functions for setting expectations for generated output.
 
 Implementation example:
@@ -196,10 +197,16 @@ In comes WP Test Utils... which offers:
 
 The functionality within these files presumes three things:
 1. This package is installed as a dependency of a plugin via Composer and will be in the `vendor/yoast/wp-test-utils/` directory.
-2. WordPress itself is available in its entirety, inclusing the `tests` directory.
-3. Either the `WP_TESTS_DIR` environment variable (path to the WordPress Core `./tests/phpunit` directory) or the `WP_DEVELOP_DIR` environment variable (path to the WordPress Core root directory) will be set.
-    These environment variables can be set on the OS level or from within a `phpunit.xml[.dist]` file.
-    If neither of the environment variables is available, the plugin is presumed to be installed in a `src/wp-content/plugins/plugin-name` directory, with this package in the `src/wp-content/plugins/plugin-name/vendor/yoast/wp-test-utils` directory.
+2. WordPress itself is available in its entirety, including the `includes` subdirectory of the WP native `tests/phpunit` directory.
+3. The location of the test files from the WordPress installation is known.
+
+The location of the test files from the WordPress install can be made known in the following ways:
+1. Either set a `WP_TESTS_DIR` environment variable to the path to the WordPress Core `./tests/phpunit` directory; or a directory containing the `includes` subdirectory from the WordPress Core `./tests/phpunit` directory, such as created by the WP CLI `scaffold` command.
+2. Or set the `WP_DEVELOP_DIR` environment variable to the path to the WordPress Core root directory from a git/svn check-out.
+
+These environment variables can be set on the OS level or from within a `phpunit.xml[.dist]` file.
+
+If neither of the environment variables is available, the plugin is presumed to be installed within WordPress itself in a `src/wp-content/plugins/plugin-name` directory, with this package in the `src/wp-content/plugins/plugin-name/vendor/yoast/wp-test-utils` directory.
 
 This is in line with a typical integration test setup in the context of WordPress.
 
