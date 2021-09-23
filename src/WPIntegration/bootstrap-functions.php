@@ -52,6 +52,8 @@ function get_path_to_wp_test_dir() {
 				return $tests_dir;
 			}
 		}
+
+		unset( $tests_dir );
 	}
 
 	if ( \getenv( 'WP_DEVELOP_DIR' ) !== false ) {
@@ -65,6 +67,8 @@ function get_path_to_wp_test_dir() {
 				return $dev_dir . 'tests/phpunit/';
 			}
 		}
+
+		unset( $dev_dir );
 	}
 
 	/*
@@ -77,6 +81,23 @@ function get_path_to_wp_test_dir() {
 		$tests_dir = \realpath( $tests_dir );
 		if ( $tests_dir !== false ) {
 			return $normalize_path( $tests_dir ) . '/';
+		}
+
+		unset( $tests_dir );
+	}
+
+	/*
+	 * Last resort: see if this is a typical WP-CLI scaffold command set-up where a subset of
+	 * the WP test files have been put in the system temp directory.
+	 */
+	$tests_dir = sys_get_temp_dir() . '/wordpress-tests-lib';
+	$tests_dir = \realpath( $tests_dir );
+	if ( $tests_dir !== false ) {
+		$tests_dir = $normalize_path( $tests_dir ) . '/';
+		if ( \is_dir( $tests_dir ) === true
+			&& @\file_exists( $tests_dir . 'includes/bootstrap.php' )
+		) {
+			return $tests_dir;
 		}
 	}
 
