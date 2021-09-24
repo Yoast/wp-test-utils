@@ -95,7 +95,7 @@ function get_path_to_wp_test_dir() {
 	 * Last resort: see if this is a typical WP-CLI scaffold command set-up where a subset of
 	 * the WP test files have been put in the system temp directory.
 	 */
-	$tests_dir = sys_get_temp_dir() . '/wordpress-tests-lib';
+	$tests_dir = \sys_get_temp_dir() . '/wordpress-tests-lib';
 	$tests_dir = \realpath( $tests_dir );
 	if ( $tests_dir !== false ) {
 		$tests_dir = $normalize_path( $tests_dir ) . '/';
