@@ -102,6 +102,11 @@
 		<exclude-pattern>/src/BrainMonkey/bootstrap\.php$</exclude-pattern>
 	</rule>
 
+	<!-- These duplicate classes are by design. -->
+	<rule ref="Generic.Classes.DuplicateClassName">
+		<exclude-pattern>/src/WPIntegration/TestCase*\.php$</exclude-pattern>
+	</rule>
+
 	<!-- Allow for camelCase method and variable names to be more in line with PHPUnit and BrainMonkey. -->
 	<rule ref="WordPress.NamingConventions.ValidFunctionName">
 		<exclude-pattern>/src/Helpers/*\.php$</exclude-pattern>
