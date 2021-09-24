@@ -21,12 +21,17 @@ namespace Yoast\WPTestUtils\WPIntegration;
  *   and should point to the root directory of a WordPress clone.
  * - The plugin potentially being installed in a WordPress install.
  *   In that case, the plugin is expected to be in the `src/wp-content/plugin/plugin-name` directory.
+ * - The plugin using a test setup as typically created by the WP-CLI scaffold command,
+ *   which creates directories with the relevant test files in the system temp directory.
  *
  * Note: The path will be checked to make sure it is a valid path and actually points to
- * a WP core install containing the `tests/phpunit/` directory.
+ * a directory containing the `includes/bootstrap.php` file.
  *
- * @return string|false Path to the WP `tests/phpunit/` directory (including trailing slash)
- *                      or FALSE if the path couldn't be determined or if the path *could*
+ * @since 1.0.0 Added fallback to typical WP-CLI scaffold command install directory.
+ *
+ * @return string|false Path to the WP `tests/phpunit/` directory (or similar) containing
+ *                      the test bootstrap file. The path will include a trailing slash.
+ *                      FALSE if the path couldn't be determined or if the path *could*
  *                      be determined, but doesn't exist.
  */
 function get_path_to_wp_test_dir() {
@@ -156,7 +161,7 @@ function load_wp_test_bootstrap() {
 	$wp_test_path = namespace\get_path_to_wp_test_dir();
 
 	if ( $wp_test_path !== false ) {
-		// We can safely load the bootstrap file as the `Autoload::determine_wp_test_dir()` method
+		// We can safely load the bootstrap file as the `get_path_to_wp_test_dir()` function
 		// already verifies it exists.
 		require_once $wp_test_path . 'includes/bootstrap.php';
 		return;
