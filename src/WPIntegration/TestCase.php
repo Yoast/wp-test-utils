@@ -4,11 +4,14 @@ namespace Yoast\WPTestUtils\WPIntegration;
 
 use WP_UnitTestCase;
 use Yoast\PHPUnitPolyfills\Helpers\AssertAttributeHelper;
+use Yoast\PHPUnitPolyfills\Polyfills\AssertClosedResource;
 use Yoast\PHPUnitPolyfills\Polyfills\AssertEqualsSpecializations;
 use Yoast\PHPUnitPolyfills\Polyfills\AssertFileEqualsSpecializations;
 use Yoast\PHPUnitPolyfills\Polyfills\AssertionRenames;
 use Yoast\PHPUnitPolyfills\Polyfills\AssertIsType;
+use Yoast\PHPUnitPolyfills\Polyfills\AssertObjectEquals;
 use Yoast\PHPUnitPolyfills\Polyfills\AssertStringContains;
+use Yoast\PHPUnitPolyfills\Polyfills\EqualToSpecializations;
 use Yoast\PHPUnitPolyfills\Polyfills\ExpectExceptionMessageMatches;
 use Yoast\PHPUnitPolyfills\Polyfills\ExpectExceptionObject;
 use Yoast\PHPUnitPolyfills\Polyfills\ExpectPHPException;
@@ -26,11 +29,14 @@ use Yoast\WPTestUtils\Helpers\ExpectOutputHelper;
 abstract class TestCase extends WP_UnitTestCase {
 
 	use AssertAttributeHelper;
+	use AssertClosedResource;
 	use AssertEqualsSpecializations;
 	use AssertFileEqualsSpecializations;
 	use AssertionRenames;
 	use AssertIsType;
+	use AssertObjectEquals;
 	use AssertStringContains;
+	use EqualToSpecializations;
 	use ExpectExceptionMessageMatches;
 	use ExpectExceptionObject;
 	use ExpectOutputHelper;
