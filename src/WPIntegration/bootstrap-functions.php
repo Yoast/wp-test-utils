@@ -120,6 +120,12 @@ function bootstrap_it() {
 	// Make sure the Composer autoload file has been generated.
 	namespace\check_composer_autoload_exists();
 
+	/*
+	 * Load the PHPUnit Polyfills autoload file before bootstrapping WordPress for compatibility
+	 * with the test changes per WP 5.9 (and backported to WP 5.2 - 5.8).
+	 */
+	require_once __DIR__ . '/../../../phpunit-polyfills/phpunitpolyfills-autoload.php';
+
 	// Load WordPress.
 	namespace\load_wp_test_bootstrap();
 
@@ -185,11 +191,16 @@ function load_composer_autoload() {
  * Verifies whether the Composer autoload file exists for a plugin which uses this libary
  * as a dependency.
  *
+ * @since 1.0.0 Also checks that the PHPUnit Polyfills autoload file exists, just to be sure.
+ *
  * @return void
  */
 function check_composer_autoload_exists() {
-	if ( @\file_exists( __DIR__ . '/../../../../autoload.php' ) === false ) {
-		echo \PHP_EOL, 'ERROR: Run `composer install` to generate the autoload files before running the unit tests.', \PHP_EOL;
+	if ( @\file_exists( __DIR__ . '/../../../../autoload.php' ) === false
+		&& @\file_exists( __DIR__ . '/../../../phpunit-polyfills/phpunitpolyfills-autoload.php' ) === false
+	) {
+		echo \PHP_EOL, 'ERROR: Run `composer install` or `composer update -W` to install the dependencies',
+			' and generate the autoload files before running the unit tests.', \PHP_EOL;
 		exit( 1 );
 	}
 }
