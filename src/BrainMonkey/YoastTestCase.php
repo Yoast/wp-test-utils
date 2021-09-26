@@ -34,7 +34,13 @@ abstract class YoastTestCase extends TestCase {
 
 					return $show;
 				},
-				'is_multisite'         => false,
+				'is_multisite'         => static function() {
+					if ( \defined( 'WP_TESTS_MULTISITE' ) ) {
+						return (bool) \WP_TESTS_MULTISITE;
+					}
+
+					return false;
+				},
 				'mysql2date'           => static function( $format, $date ) {
 					return $date;
 				},
