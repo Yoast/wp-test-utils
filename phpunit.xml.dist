@@ -6,6 +6,7 @@
     bootstrap="./vendor/autoload.php"
     beStrictAboutTestsThatDoNotTestAnything="true"
     colors="true"
+    convertDeprecationsToExceptions="true"
     forceCoversAnnotation="true">
 
     <testsuites>

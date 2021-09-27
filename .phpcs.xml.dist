@@ -34,6 +34,13 @@
 	-->
 
 	<rule ref="Yoast">
+		<properties>
+			<!-- Provide the plugin specific prefixes for all naming related sniffs. -->
+			<property name="prefixes" type="array">
+				<element value="Yoast\WPTestUtils"/>
+			</property>
+		</properties>
+
 		<!-- Use CamelCaps file names to be more in line with the naming conventions used in PHPUnit. -->
 		<exclude name="Yoast.Files.FileName"/>
 
@@ -90,6 +97,16 @@
 		<exclude-pattern>/src/*/bootstrap*\.php$</exclude-pattern>
 	</rule>
 
+	<!-- Declaring a few WordPress native constants. -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound">
+		<exclude-pattern>/src/BrainMonkey/bootstrap\.php$</exclude-pattern>
+	</rule>
+
+	<!-- These duplicate classes are by design. -->
+	<rule ref="Generic.Classes.DuplicateClassName">
+		<exclude-pattern>/src/WPIntegration/TestCase*\.php$</exclude-pattern>
+	</rule>
+
 	<!-- Allow for camelCase method and variable names to be more in line with PHPUnit and BrainMonkey. -->
 	<rule ref="WordPress.NamingConventions.ValidFunctionName">
 		<exclude-pattern>/src/Helpers/*\.php$</exclude-pattern>
@@ -98,6 +115,15 @@
 		<exclude-pattern>/src/Helpers/*\.php$</exclude-pattern>
 	</rule>
 
+	<!-- Ignore word count for object names in tests. -->
+	<rule ref="Yoast.NamingConventions.ObjectNameDepth.MaxExceeded">
+		<exclude-pattern>/tests/*\.php$</exclude-pattern>
+	</rule>
+
+	<!-- Test fixtures are not the actual tests. -->
+	<rule ref="Yoast.Commenting.TestsHaveCoversTag">
+		<exclude-pattern>/tests/*/Fixtures/*\.php$</exclude-pattern>
+	</rule>
 
 	<!--
 	#############################################################################
