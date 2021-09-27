@@ -14,12 +14,8 @@ jobs:
 
     strategy:
       matrix:
-        php: ['5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0']
+        php: ['5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1']
         experimental: [false]
-
-        include:
-          - php: '8.1'
-            experimental: true
 
     name: "Tests: PHP ${{ matrix.php }}"
 
