@@ -14,16 +14,9 @@ jobs:
 
     strategy:
       matrix:
-        php: ['5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1']
-        experimental: [false]
-
-        include:
-          - php: '8.2'
-            experimental: true
+        php: ['5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2']
 
     name: "Tests: PHP ${{ matrix.php }}"
-
-    continue-on-error: ${{ matrix.experimental }}
 
     steps:
       - name: Checkout code
@@ -38,16 +31,8 @@ jobs:
 
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-composer-dependencies
-      - name: Install Composer dependencies for PHP < 8.2
-        if: ${{ matrix.php < 8.2 }}
+      - name: Install Composer dependencies
         uses: "ramsey/composer-install@v2"
-
-      # For PHP 8.1 and above, we need to install with ignore platform reqs as not all dependencies allow it yet.
-      - name: Install Composer dependencies for PHP >= 8.2
-        if: ${{ matrix.php >= 8.2 }}
-        uses: "ramsey/composer-install@v2"
-        with:
-          composer-options: --ignore-platform-reqs
 
       - name: Lint PHP files against parse errors
         run: composer lint
