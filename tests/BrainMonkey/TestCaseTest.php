@@ -61,6 +61,46 @@ class TestCaseTest extends TestCase {
 	}
 
 	/**
+	 * Verify the input dependent behaviour of the stub for the `_n()` function.
+	 *
+	 * @return void
+	 */
+	public function testStubTranslationFunctionsN() {
+		$this->stubTranslationFunctions();
+
+		$this->assertSame(
+			'chair',
+			\_n( 'chair', 'chairs', 1 ),
+			'Function stub for _n() does not return singular when number is 1'
+		);
+		$this->assertSame(
+			'chairs',
+			\_n( 'chair', 'chairs', 10 ),
+			'Function stub for _n() does not return plural when number is not 1'
+		);
+	}
+
+	/**
+	 * Verify the input dependent behaviour of the stub for the `_nx()` function.
+	 *
+	 * @return void
+	 */
+	public function testStubTranslationFunctionsNx() {
+		$this->stubTranslationFunctions();
+
+		$this->assertSame(
+			'table',
+			\_nx( 'table', 'tables', 1, 'test' ),
+			'Function stub for _nx() does not return singular when number is 1'
+		);
+		$this->assertSame(
+			'tables',
+			\_nx( 'table', 'tables', 10, 'test' ),
+			'Function stub for _nx() does not return plural when number is not 1'
+		);
+	}
+
+	/**
 	 * Verify the alternative translations function stubbing for functions echo-ing output is available
 	 * and that the functions echo out the input unchanged.
 	 *
