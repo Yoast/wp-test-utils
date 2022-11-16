@@ -32,3 +32,17 @@ namespace Yoast\WPTestUtils\BrainMonkey;
 if ( \function_exists( 'opcache_reset' ) ) {
 	\opcache_reset();
 }
+
+/**
+ * On the fly create multiple "fake" test double classes which allow for setting
+ * (dynamic) properties on them.
+ *
+ * @see TestCase::makeDoubleForUnavailableClass()
+ *
+ * @param string[] $class_names List of class names to be "faked".
+ *
+ * @return void
+ */
+function makeDoublesForUnavailableClasses( array $class_names ) {
+	TestCase::makeDoublesForUnavailableClasses( $class_names );
+}

@@ -6,6 +6,7 @@ use Brain\Monkey;
 use Brain\Monkey\Functions;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase as Polyfill_TestCase;
+use Yoast\WPTestUtils\BrainMonkey\Doubles\DummyTestDouble;
 use Yoast\WPTestUtils\Helpers\ExpectOutputHelper;
 
 /**
@@ -96,5 +97,55 @@ abstract class TestCase extends Polyfill_TestCase {
 				'esc_xml',
 			]
 		);
+	}
+
+	/**
+	 * On the fly create a "fake" test double class, which allows for setting
+	 * (dynamic) properties on it.
+	 *
+	 * This method is solely intended for classes which are unavailable during
+	 * the test run.
+	 *
+	 * Typically a mock for an unavailable class is created using `Mockery::mock()`
+	 * or `Mockery::mock( 'Unavailable' )`.
+	 * When either the test or the code under test sets a property on such a mock,
+	 * this will lead to a "Creation of dynamic properties is deprecated"
+	 * notice on PHP >= 8.2, which can cause tests to error out.
+	 *
+	 * This method provides a work-around for this by on the fly creating a test double
+	 * for the unavailable class which allows for setting dynamic properties.
+	 *
+	 * This method can be called during the test bootstrapping, in test `set_up()`
+	 * methods or in the test itself (also see the linked helper functions).
+	 *
+	 * For setting expectations on the "fake" test double, use `Mockery::mock( 'FakedClass' )`.
+	 *
+	 * @see Yoast\WPTestUtils\BrainMonkey\makeDoublesForUnavailableClasses() Create one or more fake doubles during the test bootstrapping.
+	 * @see Yoast\WPTestUtils\BrainMonkey\TestCase::makeDoublesForUnavailableClasses() Create one or more fake doubles in one go.
+	 *
+	 * @param string $class_name Name of the class to be "faked".
+	 *
+	 * @return void
+	 */
+	public static function makeDoubleForUnavailableClass( $class_name ) {
+		if ( \class_exists( $class_name ) === false ) {
+			\class_alias( DummyTestDouble::class, $class_name );
+		}
+	}
+
+	/**
+	 * On the fly create multiple "fake" test double classes which allow for setting
+	 * (dynamic) properties on them.
+	 *
+	 * @see TestCase::makeDoubleForUnavailableClass()
+	 *
+	 * @param string[] $class_names List of class names to be "faked".
+	 *
+	 * @return void
+	 */
+	public static function makeDoublesForUnavailableClasses( array $class_names ) {
+		foreach ( $class_names as $class_name ) {
+			self::makeDoubleForUnavailableClass( $class_name );
+		}
 	}
 }
