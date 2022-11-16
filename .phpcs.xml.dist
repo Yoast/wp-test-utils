@@ -125,16 +125,4 @@
 		<exclude-pattern>/tests/*/Fixtures/*\.php$</exclude-pattern>
 	</rule>
 
-	<!--
-	#############################################################################
-	TEMPORARY ADJUSTMENTS
-	Adjustments which should be removed once the associated issue has been resolved.
-	#############################################################################
-	-->
-
-	<!-- PHPCS Bug: https://github.com/squizlabs/PHP_CodeSniffer/pull/3184 -->
-	<rule ref="PSR2.Namespaces.NamespaceDeclaration">
-		<exclude-pattern>/src/WPIntegration/(bootstrap-functions|Autoload)\.php$</exclude-pattern>
-	</rule>
-
 </ruleset>
