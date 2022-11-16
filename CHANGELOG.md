@@ -9,6 +9,28 @@ This projects adheres to [Keep a CHANGELOG](http://keepachangelog.com/) and uses
 
 _Nothing yet._
 
+## [1.1.0] - 2022-11-17
+
+### Added
+* Helper functions for on-the-fly creation of opaque test doubles for unavailable classes for use with Mockery. PR [#40]
+    The default Mockery mocks for unavailable classes do not allow for the dynamic property deprecation in PHP 8.2, which can cause tests to error out.
+    These helper functions can be used to create test doubles which do allow for setting properties.
+    The helper functions can be called from within a test bootstrap or from within a test class.
+    For full details about these new functions, why they exist and how to use them, please see [the documentation in the README](https://github.com/Yoast/wp-test-utils#helpers-to-create-test-doubles-for-unavailable-classes).
+
+### Changed
+* The [BrainMonkey] dependency has been updated to require [version `^2.6.1`](https://github.com/Brain-WP/BrainMonkey/releases/tag/2.6.1) (was `^2.6.0`). PR  [#28]
+* The [PHPUnit Polyfills] dependency has been updated to require [version `^1.0.4`](https://github.com/Yoast/PHPUnit-Polyfills/releases/tag/1.0.4) (was `^1.0.1`). PRs [#28], [#41]
+* Composer: The package will now identify itself as a testing tool. PR [#36]
+* Verified PHP 8.2 compatibility.
+* General housekeeping.
+
+[#28]: https://github.com/Yoast/wp-test-utils/pull/28
+[#36]: https://github.com/Yoast/wp-test-utils/pull/36
+[#40]: https://github.com/Yoast/wp-test-utils/pull/40
+[#41]: https://github.com/Yoast/wp-test-utils/pull/41
+
+
 ## [1.0.0] - 2021-09-27
 
 WordPress 5.9 contains significant changes to the WordPress native test suite, which impacts **integration tests**.<br/>
@@ -86,6 +108,7 @@ Initial release.
 
 
 [Unreleased]: https://github.com/Yoast/wp-test-utils/compare/main...HEAD
+[1.1.0]: https://github.com/Yoast/wp-test-utils/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/Yoast/wp-test-utils/compare/0.2.2...1.0.0
 [0.2.2]: https://github.com/Yoast/wp-test-utils/compare/0.2.1...0.2.2
 [0.2.1]: https://github.com/Yoast/wp-test-utils/compare/0.2.0...0.2.1
