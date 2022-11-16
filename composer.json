@@ -1,7 +1,7 @@
 {
     "name" : "yoast/wp-test-utils",
     "description" : "PHPUnit cross-version compatibility layer for testing plugins and themes build for WordPress",
-    "keywords" : [ "wordpress", "unit-testing", "integration-testing", "brainmonkey", "phpunit" ],
+    "keywords" : [ "wordpress", "unit-testing", "integration-testing", "brainmonkey", "phpunit", "testing" ],
     "license" : "BSD-3-Clause",
     "homepage": "https://github.com/Yoast/wp-test-utils/",
     "authors": [
@@ -21,11 +21,16 @@
     },
     "require" : {
         "php" : ">=5.6",
-        "yoast/phpunit-polyfills": "^1.0.1",
-        "brain/monkey": "^2.6.0"
+        "yoast/phpunit-polyfills": "^1.0.4",
+        "brain/monkey": "^2.6.1"
     },
     "require-dev" : {
-        "yoast/yoastcs": "^2.2.0"
+        "yoast/yoastcs": "^2.2.1"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -51,7 +56,7 @@
     },
     "scripts" : {
         "lint": [
-            "@php ./vendor/php-parallel-lint/php-parallel-lint/parallel-lint . -e php --exclude vendor --exclude .git"
+            "@php ./vendor/php-parallel-lint/php-parallel-lint/parallel-lint . -e php --show-deprecated --exclude vendor --exclude .git"
         ],
         "check-cs": [
             "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs"

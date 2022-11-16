@@ -5,7 +5,7 @@ WP Test Utils
 [![CS Build Status](https://github.com/Yoast/wp-test-utils/actions/workflows/cs.yml/badge.svg)](https://github.com/Yoast/wp-test-utils/actions/workflows/cs.yml)
 [![Test Build Status](https://github.com/Yoast/wp-test-utils/actions/workflows/test.yml/badge.svg)](https://github.com/Yoast/wp-test-utils/actions/workflows/test.yml)
 [![Minimum PHP Version](https://img.shields.io/packagist/php-v/yoast/wp-test-utils.svg?maxAge=3600)](https://packagist.org/packages/yoast/wp-test-utils)
-[![License: BSD3](https://poser.pugx.org/yoast/wp-test-utils/license)](https://github.com/Yoast/wp-test-utils/blob/master/LICENSE)
+[![License: BSD3](https://poser.pugx.org/yoast/wp-test-utils/license)](https://github.com/Yoast/wp-test-utils/blob/main/LICENSE)
 
 This library contains a set of utilities for running automated tests for WordPress plugins and themes.
 
@@ -16,6 +16,7 @@ This library contains a set of utilities for running automated tests for WordPre
         - [Basic `TestCase` for use with BrainMonkey](#basic-testcase-for-use-with-brainmonkey)
         - [Yoast TestCase for use with BrainMonkey](#yoast-testcase-for-use-with-brainmonkey)
         - [Bootstrap file for use with BrainMonkey](#bootstrap-file-for-use-with-brainmonkey)
+        - [Helpers to create test doubles for unavailable classes](#helpers-to-create-test-doubles-for-unavailable-classes)
     - [Utilities for running integration tests with WordPress](#utilities-for-running-integration-tests-with-wordpress)
         - [What these utilities solve](#what-these-utilities-solve)
         - [Basic `TestCase` for WordPress integration tests](#basic-testcase-for-wordpress-integration-tests)
@@ -32,9 +33,9 @@ Requirements
 * PHP 5.6 or higher.
 
 The following packages will be automatically required via Composer:
-* [PHPUnit Polyfills] 1.0.1 or higher.
+* [PHPUnit Polyfills] 1.0.4 or higher.
 * [PHPUnit] 5.7 - 9.x.
-* [BrainMonkey] 2.6.0 or higher.
+* [BrainMonkey] 2.6.1 or higher.
 
 
 Installation
@@ -67,7 +68,8 @@ Features of this `TestCase`:
     The BrainMonkey native functions create stubs which will apply basic HTML escaping if the stubbed function is an escaping function, like `esc_html__()`.<br/>
     The alternative implementations of these functions will create stubs which will return the original value without change. This makes creating tests easier as the `$expected` value does not need to account for the HTML escaping.<br/>
     _Note: the alternative implementation should be used selectively._
-5. Helper functions for setting expectations for generated output.
+5. Helper functions for [setting expectations for generated output](#yoastwptestutilshelpersescapeoutputhelper-trait).
+6. Helper functions for [creating "dummy" test doubles for unavailable classes](#helpers-to-create-test-doubles-for-unavailable-classes).
 
 **_Implementation example:_**
 ```php
@@ -166,6 +168,76 @@ require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 ```
 
 To tell PHPUnit to use this bootstrap file, use `--bootstrap tests/bootstrap.php` on the command-line or add the `bootstrap="tests/bootstrap.php"` attribute to your `phpunit.xml.dist` file.
+
+
+#### Helpers to create test doubles for unavailable classes
+
+##### Why you may need to create test doubles for unavailable classes
+
+Typically a mock for an unavailable class is created using `Mockery::mock()` or `Mockery::mock( 'Unavailable' )`.
+
+When either the test or the code under test sets a property on such a mock, this will lead to a ["Creation of dynamic properties is deprecated" notice](https://wiki.php.net/rfc/deprecate_dynamic_properties) on PHP >= 8.2, which can cause tests to error out.
+
+If you know for sure the property being set on the mock is a declared property or a property supported via [magic methods](https://www.php.net/oop5.overloading#language.oop5.overloading.members) on the class which is being mocked, the _code under test_ will under normal circumstances never lead to this deprecation notice, but your tests now do.
+
+Primarly this is an issue with Mockery. A [question on how to handle this/to add support for this in Mockery itself](https://github.com/mockery/mockery/issues/1197) is open, but in the mean time a work-around is needed (if you're interested, have a read through the Mockery issue for details about alternative solutions and why those don't work as intended).
+
+##### How to use the functionality
+
+WP Test Utils offers three new utilities to solve this (as of version 1.1.0).
+* `Yoast\WPTestUtils\BrainMonkey\makeDoublesForUnavailableClasses( array $class_names )` for use from within a test bootstrap file.
+* `Yoast\WPTestUtils\BrainMonkey\TestCase::makeDoublesForUnavailableClasses( array $class_names )` and `Yoast\WPTestUtils\BrainMonkey\TestCase::makeDoubleForUnavailableClass( string $class_name )` for use from within a test class.
+
+These methods can be used to create one or more "fake" test double classes on the fly, which allow for setting (dynamic) properties.
+These "fake" test double classes are effectively aliases for `stdClass`.
+
+These methods are solely intended for classes which are unavailable during the test run and have no effect (at all!) on classes which _are_ available during the test run.
+
+For setting expectations on the "fake" test double, use `Mockery::mock( 'FakedClass' )`.
+
+**_Implementation example using the bootstrap function:_**
+
+You can create the "fake" test doubles for a complete test suite in one go in your test bootstrap file like so:
+
+```php
+<?php
+// File: tests/bootstrap.php
+require_once dirname( __DIR__ ) . '/vendor/yoast/wp-test-utils/src/BrainMonkey/bootstrap.php';
+require_once dirname( __DIR__ ) . '/vendor/autoload.php';
+
+Yoast\WPTestUtils\BrainMonkey\makeDoublesForUnavailableClasses( [ 'WP_Post', 'wpdb' ] );
+```
+
+**_Implementation example using these functions from within a test class:_**
+
+Alternatively, you can create the "fake" test double(s) last minute in each test class which needs them.
+
+```php
+<?php
+namespace PackageName\Tests;
+
+use Mockery;
+use WP_Post;
+use wpdb;
+use Yoast\WPTestUtils\BrainMonkey\TestCase;
+
+class FooTest extends TestCase {
+    protected function set_up_before_class() {
+        parent::set_up_before_class();
+        self::makeDoublesForUnavailableClasses( [ WP_Post::class, wpdb::class ] );
+        // or if only one class is needed:
+        self::makeDoubleForUnavailableClass( WP_Post::class );
+    }
+
+    public function testSomethingWhichUsesWpPost() {
+        $wp_post = Mockery::mock( WP_Post::class );
+        $wp_post->post_title = 'my test title';
+        $wp_post->post_type  = 'my_custom_type';
+
+        $this->assertSame( 'expected', \function_under_test( $wp_post ) );
+    }
+}
+```
 
 
 ### Utilities for running integration tests with WordPress
