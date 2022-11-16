@@ -109,10 +109,16 @@
 
 	<!-- Allow for camelCase method and variable names to be more in line with PHPUnit and BrainMonkey. -->
 	<rule ref="WordPress.NamingConventions.ValidFunctionName">
+		<exclude-pattern>/src/BrainMonkey/bootstrap\.php$</exclude-pattern>
 		<exclude-pattern>/src/Helpers/*\.php$</exclude-pattern>
 	</rule>
 	<rule ref="WordPress.NamingConventions.ValidVariableName">
 		<exclude-pattern>/src/Helpers/*\.php$</exclude-pattern>
+	</rule>
+
+	<!-- This class is not a test double for the tests, but a _feature_ of this package. -->
+	<rule ref="Yoast.Files.TestDoubles">
+		<exclude-pattern>/src/BrainMonkey/Doubles/DummyTestDouble\.php$</exclude-pattern>
 	</rule>
 
 	<!-- Ignore word count for object names in tests. -->
