@@ -189,7 +189,7 @@ WP Test Utils offers three new utilities to solve this (as of version 1.1.0).
 * `Yoast\WPTestUtils\BrainMonkey\TestCase::makeDoublesForUnavailableClasses( array $class_names )` and `Yoast\WPTestUtils\BrainMonkey\TestCase::makeDoubleForUnavailableClass( string $class_name )` for use from within a test class.
 
 These methods can be used to create one or more "fake" test double classes on the fly, which allow for setting (dynamic) properties.
-These "fake" test double classes are effectively aliases for `stdClass`.
+These "fake" test double classes are effectively opaque classes which extend `stdClass`.
 
 These methods are solely intended for classes which are unavailable during the test run and have no effect (at all!) on classes which _are_ available during the test run.
 
