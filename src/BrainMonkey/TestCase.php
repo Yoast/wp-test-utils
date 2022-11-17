@@ -5,8 +5,8 @@ namespace Yoast\WPTestUtils\BrainMonkey;
 use Brain\Monkey;
 use Brain\Monkey\Functions;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use RuntimeException;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase as Polyfill_TestCase;
-use Yoast\WPTestUtils\BrainMonkey\Doubles\DummyTestDouble;
 use Yoast\WPTestUtils\Helpers\ExpectOutputHelper;
 
 /**
@@ -17,6 +17,33 @@ abstract class TestCase extends Polyfill_TestCase {
 	use ExpectOutputHelper;
 	// Adds Mockery expectations to the PHPUnit assertions count.
 	use MockeryPHPUnitIntegration;
+
+	/**
+	 * Regular expression to check if a given identifier name is valid for use in PHP.
+	 *
+	 * @var string
+	 */
+	const PHP_LABEL_REGEX = '`^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$`';
+
+	/**
+	 * Template for class double generation for a global class.
+	 *
+	 * @var string
+	 */
+	const TEMPLATE_GLOBAL_CLASS_DECLARATION = <<<'TPL'
+class %s extends stdClass {}
+TPL;
+
+	/**
+	 * Template for class double generation for a namespaced class.
+	 *
+	 * @var string
+	 */
+	const TEMPLATE_FQN_CLASS_DECLARATION = <<<'TPL'
+namespace %s;
+use stdClass;
+class %s extends stdClass {}
+TPL;
 
 	/**
 	 * Sets up test fixtures.
@@ -123,14 +150,46 @@ abstract class TestCase extends Polyfill_TestCase {
 	 * @see Yoast\WPTestUtils\BrainMonkey\makeDoublesForUnavailableClasses() Create one or more fake doubles during the test bootstrapping.
 	 * @see Yoast\WPTestUtils\BrainMonkey\TestCase::makeDoublesForUnavailableClasses() Create one or more fake doubles in one go.
 	 *
-	 * @param string $class_name Name of the class to be "faked".
+	 * @param string $class_name Name of the class to be "faked". This can be a fully qualified name.
 	 *
 	 * @return void
+	 *
+	 * @throws RuntimeException When an invalid class name is passed.
 	 */
 	public static function makeDoubleForUnavailableClass( $class_name ) {
-		if ( \class_exists( $class_name ) === false ) {
-			\class_alias( DummyTestDouble::class, $class_name );
+		if ( \class_exists( $class_name ) === true ) {
+			return;
 		}
+
+		// Remove potential leading backslash for fully qualified names.
+		$class_name = \ltrim( $class_name, '\\' );
+		if ( empty( $class_name ) ) {
+			throw new RuntimeException( "Class name $class_name is not a valid name in PHP" );
+		}
+
+		$parts = \explode( '\\', $class_name );
+
+		// Validate that each part of the name is valid.
+		foreach ( $parts as $part ) {
+			if ( \preg_match( self::PHP_LABEL_REGEX, $part ) !== 1 ) {
+				throw new RuntimeException( "Class name $class_name is not a valid name in PHP" );
+			}
+		}
+
+		$class_name = \array_pop( $parts );
+		$code       = '';
+		if ( empty( $parts ) ) {
+			// No namespace.
+			$code = \sprintf( self::TEMPLATE_GLOBAL_CLASS_DECLARATION, $class_name );
+		}
+		else {
+			// FQN name.
+			$namespace = \implode( '\\', $parts );
+			$code      = \sprintf( self::TEMPLATE_FQN_CLASS_DECLARATION, $namespace, $class_name );
+		}
+
+		// phpcs:ignore Squiz.PHP.Eval.Discouraged -- No risk here, this is intentional (and only in non-production code).
+		eval( $code );
 	}
 
 	/**

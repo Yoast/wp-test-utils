@@ -9,6 +9,16 @@ This projects adheres to [Keep a CHANGELOG](http://keepachangelog.com/) and uses
 
 _Nothing yet._
 
+## [1.1.1] - 2022-11-17
+
+### Fixed
+* The "on the fly" created test doubles would identify as the same class when comparing objects using `instanceof`. [#45]
+    The underlying logic has been changed to prevent this.
+    This includes removing the (non-public API) `Yoast\WPTestUtils\BrainMonkey\Doubles\DummyTestDouble` class which was introduced in 1.1.0.
+
+[#45]: https://github.com/Yoast/wp-test-utils/pull/45
+
+
 ## [1.1.0] - 2022-11-17
 
 ### Added
@@ -108,6 +118,7 @@ Initial release.
 
 
 [Unreleased]: https://github.com/Yoast/wp-test-utils/compare/main...HEAD
+[1.1.1]: https://github.com/Yoast/wp-test-utils/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/Yoast/wp-test-utils/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/Yoast/wp-test-utils/compare/0.2.2...1.0.0
 [0.2.2]: https://github.com/Yoast/wp-test-utils/compare/0.2.1...0.2.2

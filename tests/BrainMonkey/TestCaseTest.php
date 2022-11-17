@@ -5,8 +5,11 @@ namespace Yoast\WPTestUtils\Tests\BrainMonkey;
 use Brain\Monkey\Functions;
 use Mockery;
 use ReflectionClass;
+use RuntimeException;
+use stdClass;
 use UnavailableClassB;
-use Yoast\WPTestUtils\BrainMonkey\Doubles\DummyTestDouble;
+use WP_ClassA;
+use WP_ClassB;
 use Yoast\WPTestUtils\BrainMonkey\TestCase;
 use Yoast\WPTestUtils\Tests\BrainMonkey\Fixtures\AnotherAvailableClass;
 use Yoast\WPTestUtils\Tests\BrainMonkey\Fixtures\AvailableClass;
@@ -145,29 +148,118 @@ class TestCaseTest extends TestCase {
 	}
 
 	/**
-	 * Verify that creating a test double aliases for an unavailable class works as expected.
+	 * Verify that creating a test double for an unavailable class with a valid class name
+	 * works as expected.
+	 *
+	 * @dataProvider dataMakeDoubleForUnavailableClass
+	 *
+	 * @param string $class_name The name of the desired class.
 	 *
 	 * @return void
 	 */
-	public function testMakeDoubleForUnavailableClass() {
+	public function testMakeDoubleForUnavailableClass( $class_name ) {
 		$this->assertFalse(
-			\class_exists( 'UnavailableClassA' ),
-			'Class UnavailableClassA appears to already exist'
+			\class_exists( $class_name ),
+			"Class $class_name appears to already exist"
 		);
 
-		$this->makeDoubleForUnavailableClass( 'UnavailableClassA' );
+		$this->makeDoubleForUnavailableClass( $class_name );
 
 		$this->assertTrue(
-			\class_exists( 'UnavailableClassA' ),
-			'Class UnavailableClassA still doesn\'t appear to exist'
+			\class_exists( $class_name ),
+			"Class $class_name still doesn't appear to exist"
 		);
 
-		$reflection_class = new ReflectionClass( 'UnavailableClassA' );
+		$reflection_class = new ReflectionClass( $class_name );
+		$parent_class     = $reflection_class->getParentClass();
 		$this->assertSame(
-			DummyTestDouble::class,
-			$reflection_class->getName(),
-			'Class UnavailableClassA is not an alias for the DummyTestDouble class'
+			stdClass::class,
+			$parent_class->getName(),
+			"Class $class_name does not extend stdClass"
 		);
+	}
+
+	/**
+	 * Data provider.
+	 *
+	 * @return array
+	 */
+	public function dataMakeDoubleForUnavailableClass() {
+		return [
+			'Global class name'                        => [ 'GlobalClassName' ],
+			'Global class name with leading backslash' => [ '\BackslashedClassName' ],
+			'Partially qualified class name'           => [ 'My\\Namespaced\\ClassName' ],
+			'Fully qualified class name'               => [ '\\Fully\\Qualified\\ClassName' ],
+		];
+	}
+
+	/**
+	 * Verify that creating a test double for an unavailable class throws an exception when
+	 * the provided class name is not a valid name for a PHP namespace/class.
+	 *
+	 * @dataProvider dataMakeDoubleForUnavailableClassThrowsExceptionWithInvalidName
+	 *
+	 * @param string $class_name The name of the desired class.
+	 *
+	 * @return void
+	 */
+	public function testMakeDoubleForUnavailableClassThrowsExceptionWithInvalidName( $class_name ) {
+		$this->assertFalse(
+			\class_exists( $class_name ),
+			"Class $class_name appears to already exist"
+		);
+
+		$this->expectException( RuntimeException::class );
+		$this->expectExceptionMessage( \sprintf( 'Class name %s is not a valid name in PHP', \ltrim( $class_name, '\\' ) ) );
+
+		$this->makeDoubleForUnavailableClass( $class_name );
+	}
+
+	/**
+	 * Data provider.
+	 *
+	 * @return array
+	 */
+	public function dataMakeDoubleForUnavailableClassThrowsExceptionWithInvalidName() {
+		return [
+			'Empty string as class name'                       => [ '' ],
+			'Only backslashes'                                 => [ '\\\\\\' ],
+			'Global class name - invalid name'                 => [ 'Class**Name' ],
+			'Fully qualified class name - invalid name start'  => [ '\\My*\\ClassName' ],
+			'Fully qualified class name - invalid name middle' => [ '\\My\2ndNS\\ClassName' ],
+		];
+	}
+
+	/**
+	 * Verify that two different test doubles created using the `makeDoubleForUnavailableClass()` method
+	 * do not identify as the same class.
+	 *
+	 * @return void
+	 */
+	public function testDoublesDoNotIdentifyAsSameClass() {
+		$classes = [
+			WP_ClassA::class,
+			WP_ClassB::class,
+		];
+
+		foreach ( $classes as $class_name ) {
+			$this->assertFalse(
+				\class_exists( $class_name ),
+				"Class $class_name appears to already exist"
+			);
+		}
+
+		self::makeDoublesForUnavailableClasses( $classes );
+
+		$mock_a = Mockery::mock( WP_ClassA::class );
+		$mock_b = Mockery::mock( WP_ClassB::class );
+		$this->assertFalse( $mock_a instanceof $mock_b, 'Mock of WP_ClassA identifies as an instance of WP_ClassB' );
+		$this->assertFalse( $mock_b instanceof $mock_a, 'Mock of WP_ClassB identifies as an instance of WP_ClassA' );
+
+		$instance_a = new WP_ClassA();
+		$instance_b = new WP_ClassB();
+		$this->assertFalse( $instance_a instanceof $instance_b, 'WP_ClassA identifies as an instance of WP_ClassB' );
+		$this->assertFalse( $instance_b instanceof $instance_a, 'WP_ClassB identifies as an instance of WP_ClassA' );
 	}
 
 	/**
@@ -282,8 +374,8 @@ class TestCaseTest extends TestCase {
 	public function testMakeDoublesForUnavailableClasses() {
 		$classes = [
 			'UnavailableClassX',
-			'My\\Namespace\\UnavailableClassY',
-			'Other\\UnavailableClassZ',
+			'My\\Namespaced\\UnavailableClassY',
+			'\\Other\\UnavailableClassZ',
 		];
 
 		foreach ( $classes as $class_name ) {
@@ -302,10 +394,11 @@ class TestCaseTest extends TestCase {
 			);
 
 			$reflection_class = new ReflectionClass( $class_name );
+			$parent_class     = $reflection_class->getParentClass();
 			$this->assertSame(
-				DummyTestDouble::class,
-				$reflection_class->getName(),
-				"Class $class_name is not an alias for the DummyTestDouble class"
+				stdClass::class,
+				$parent_class->getName(),
+				"Class $class_name does not extend stdClass"
 			);
 		}
 	}

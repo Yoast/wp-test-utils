@@ -116,11 +116,6 @@
 		<exclude-pattern>/src/Helpers/*\.php$</exclude-pattern>
 	</rule>
 
-	<!-- This class is not a test double for the tests, but a _feature_ of this package. -->
-	<rule ref="Yoast.Files.TestDoubles">
-		<exclude-pattern>/src/BrainMonkey/Doubles/DummyTestDouble\.php$</exclude-pattern>
-	</rule>
-
 	<!-- Ignore word count for object names in tests. -->
 	<rule ref="Yoast.NamingConventions.ObjectNameDepth.MaxExceeded">
 		<exclude-pattern>/tests/*\.php$</exclude-pattern>
