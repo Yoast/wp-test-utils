@@ -25,7 +25,7 @@
         "brain/monkey": "^2.6.1"
     },
     "require-dev" : {
-        "yoast/yoastcs": "^2.2.1"
+        "yoast/yoastcs": "^2.3.0"
     },
     "config": {
         "allow-plugins": {
