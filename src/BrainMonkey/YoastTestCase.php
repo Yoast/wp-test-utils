@@ -51,15 +51,15 @@ abstract class YoastTestCase extends TestCase {
 				'wp_parse_args'        => static function ( $settings, $defaults ) {
 					return \array_merge( $defaults, $settings );
 				},
-				'wp_strip_all_tags'    => static function( $string, $remove_breaks = false ) {
-					$string = \preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $string );
-					$string = \strip_tags( $string );
+				'wp_strip_all_tags'    => static function( $text, $remove_breaks = false ) {
+					$text = \preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $text );
+					$text = \strip_tags( $text );
 
 					if ( $remove_breaks ) {
-						$string = \preg_replace( '/[\r\n\t ]+/', ' ', $string );
+						$text = \preg_replace( '/[\r\n\t ]+/', ' ', $text );
 					}
 
-					return \trim( $string );
+					return \trim( $text );
 				},
 				'wp_slash'             => null,
 				'wp_unslash'           => static function( $value ) {
