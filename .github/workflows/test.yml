@@ -14,7 +14,15 @@ jobs:
 
     strategy:
       matrix:
-        php: ['5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3']
+        php: ['7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.3']
+        coverage: [false]
+
+        # Run code coverage only on high/low PHP.
+        include:
+        - php: 5.6
+          coverage: true
+        - php: 8.2
+          coverage: true
 
     continue-on-error: ${{ matrix.php == '8.3' }}
 
@@ -29,7 +37,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           ini-values: error_reporting=E_ALL, display_errors=On
-          coverage: none
+          coverage: ${{ matrix.coverage == true && 'xdebug' || 'none' }}
 
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-composer-dependencies
@@ -52,4 +60,41 @@ jobs:
         run: composer lint
 
       - name: Run the unit tests
+        if: ${{ matrix.coverage == false }}
         run: composer test
+
+      - name: Run the unit tests with code coverage
+        if: ${{ matrix.coverage == true }}
+        run: composer coverage
+
+      # PHP Coveralls doesn't fully support PHP 8.x yet, so switch the PHP version.
+      - name: Switch to PHP 7.4
+        if: ${{ success() && matrix.coverage == true && startsWith( matrix.php, '8' ) }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          coverage: none
+
+      # Global install is used to prevent a conflict with the local composer.lock in PHP 8.0+.
+      - name: Install Coveralls
+        if: ${{ success() && matrix.coverage == true }}
+        run: composer global require php-coveralls/php-coveralls:"^2.5.3" --no-interaction
+
+      - name: Upload coverage results to Coveralls
+        if: ${{ success() && matrix.coverage == true }}
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
+          COVERALLS_PARALLEL: true
+          COVERALLS_FLAG_NAME: php-${{ matrix.php }}
+        run: php-coveralls -v -x build/logs/clover.xml
+
+  coveralls-finish:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.COVERALLS_TOKEN }}
+          parallel-finished: true
