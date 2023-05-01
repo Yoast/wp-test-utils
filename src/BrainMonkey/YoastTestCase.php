@@ -48,8 +48,8 @@ abstract class YoastTestCase extends TestCase {
 				'sanitize_text_field'  => null,
 				'site_url'             => 'https://www.example.org',
 				'wp_kses_post'         => null,
-				'wp_parse_args'        => static function ( $settings, $defaults ) {
-					return \array_merge( $defaults, $settings );
+				'wp_parse_args'        => static function ( $args, $defaults ) {
+					return \array_merge( $defaults, $args );
 				},
 				'wp_strip_all_tags'    => static function( $text, $remove_breaks = false ) {
 					$text = \preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $text );
