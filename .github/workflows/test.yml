@@ -3,11 +3,11 @@ name: Test
 on:
   # Run on pushes to `main` and `develop` and on all pull requests.
   push:
-    branches:
-      - main
-      - develop
-    paths-ignore:
-      - '**.md'
+#    branches:
+#      - main
+#      - develop
+#    paths-ignore:
+#      - '**.md'
   pull_request:
   # Allow manually triggering the workflow.
   workflow_dispatch:
