@@ -184,7 +184,7 @@ class TestCaseTest extends TestCase {
 	 *
 	 * @return array
 	 */
-	public function dataMakeDoubleForUnavailableClass() {
+	public static function dataMakeDoubleForUnavailableClass() {
 		return [
 			'Global class name'                        => [ 'GlobalClassName' ],
 			'Global class name with leading backslash' => [ '\BackslashedClassName' ],
@@ -220,7 +220,7 @@ class TestCaseTest extends TestCase {
 	 *
 	 * @return array
 	 */
-	public function dataMakeDoubleForUnavailableClassThrowsExceptionWithInvalidName() {
+	public static function dataMakeDoubleForUnavailableClassThrowsExceptionWithInvalidName() {
 		return [
 			'Empty string as class name'                       => [ '' ],
 			'Only backslashes'                                 => [ '\\\\\\' ],

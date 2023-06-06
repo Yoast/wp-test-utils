@@ -125,7 +125,7 @@ jumps over the lazy dog';
 	 *
 	 * @return array
 	 */
-	public function dataMatchingSubstringsMismatchedLineEndings() {
+	public static function dataMatchingSubstringsMismatchedLineEndings() {
 		return [
 			// Actual line ending type.
 			[ "fox\njumps" ],
@@ -233,7 +233,7 @@ jumps over the lazy dog';
 	 *
 	 * @return array
 	 */
-	public function dataNormalizeLineEndings() {
+	public static function dataNormalizeLineEndings() {
 		return [
 			'already-lf'            => [ "foo\n\nbar\n", "foo\n\nbar\n" ],
 			'windows-crlf'          => [ "foo\r\n\r\nbar\r\n", "foo\n\nbar\n" ],
