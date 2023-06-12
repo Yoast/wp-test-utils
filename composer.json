@@ -21,7 +21,7 @@
     },
     "require" : {
         "php" : ">=5.6",
-        "yoast/phpunit-polyfills": "^1.0.5",
+        "yoast/phpunit-polyfills": "^2.0.0",
         "brain/monkey": "^2.6.1"
     },
     "require-dev" : {
