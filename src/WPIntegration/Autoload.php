@@ -3,6 +3,7 @@
 namespace Yoast\WPTestUtils\WPIntegration;
 
 use PHPUnit\Runner\Version as PHPUnit_Version;
+use WP_UnitTestCase;
 
 /**
  * Custom autoloader.
@@ -105,13 +106,20 @@ final class Autoload {
 	 * @return bool
 	 */
 	private static function load_test_case() {
-		if ( \method_exists( 'WP_UnitTestCase', 'set_up' ) === false ) {
+		if ( \method_exists( WP_UnitTestCase::class, 'set_up' ) === false ) {
 			// Older WP version from before the test changes.
 			require_once __DIR__ . '/TestCase.php';
 			return true;
 		}
 
-		// WP 5.9 or a WP 5.2 - 5.8 version which includes the Polyfills and the fixture method wrappers.
+		if ( \method_exists( WP_UnitTestCase::class, 'assertObjectHasProperty' ) === false ) {
+			// WP 5.2 - 5.8 version which includes the Polyfills and the fixture method wrappers,
+			// but doesn't include the latest polyfill.
+			require_once __DIR__ . '/TestCaseOnlyObjectPropertyPolyfill.php';
+			return true;
+		}
+
+		// WP 5.9 or higher which automatically includes all Polyfills and the fixture method wrappers.
 		require_once __DIR__ . '/TestCaseNoPolyfills.php';
 		return true;
 	}
