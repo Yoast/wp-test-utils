@@ -26,5 +26,4 @@ use Yoast\WPTestUtils\Helpers\ExpectOutputHelper;
 abstract class TestCase extends WP_UnitTestCase {
 
 	use ExpectOutputHelper;
-
 }
