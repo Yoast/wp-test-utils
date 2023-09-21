@@ -24,7 +24,8 @@
 	"homepage": "https://github.com/Yoast/wp-test-utils/",
 	"support": {
 		"issues": "https://github.com/Yoast/wp-test-utils/issues",
-		"source": "https://github.com/Yoast/wp-test-utils"
+		"source": "https://github.com/Yoast/wp-test-utils",
+		"security": "https://github.com/Yoast/wp-test-utils/security/policy"
 	},
 	"require": {
 		"php": ">=5.6",
