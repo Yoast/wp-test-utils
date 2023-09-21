@@ -123,7 +123,7 @@ jumps over the lazy dog';
 	/**
 	 * Data provider.
 	 *
-	 * @return array
+	 * @return array<array<string>>
 	 */
 	public function dataMatchingSubstringsMismatchedLineEndings() {
 		return [
@@ -231,7 +231,7 @@ jumps over the lazy dog';
 	/**
 	 * Data provider for the `testNormalizeLineEndings()` test.
 	 *
-	 * @return array
+	 * @return array<string, array<string>>
 	 */
 	public function dataNormalizeLineEndings() {
 		return [
