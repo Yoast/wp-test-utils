@@ -9,7 +9,7 @@ use Yoast\WPTestUtils\BrainMonkey\YoastTestCase;
  *
  * @covers \Yoast\WPTestUtils\BrainMonkey\YoastTestCase
  */
-class YoastTestCaseTest extends YoastTestCase {
+final class YoastTestCaseTest extends YoastTestCase {
 
 	/**
 	 * Verify the behaviour of the `get_bloginfo()` stub.

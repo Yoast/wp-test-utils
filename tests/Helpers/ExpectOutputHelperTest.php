@@ -16,7 +16,7 @@ use Yoast\WPTestUtils\Tests\Helpers\Fixtures\IncorrectOutputSingleExpectationTes
  *
  * @covers \Yoast\WPTestUtils\Helpers\ExpectOutputHelper
  */
-class ExpectOutputHelperTest extends TestCase {
+final class ExpectOutputHelperTest extends TestCase {
 
 	use AssertionRenames;
 	use AssertStringContains;
