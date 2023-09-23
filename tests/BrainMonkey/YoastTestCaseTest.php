@@ -30,7 +30,7 @@ final class YoastTestCaseTest extends YoastTestCase {
 	 *
 	 * @return array<string, array<string, string>>
 	 */
-	public function dataStubGetBlogInfo() {
+	public static function dataStubGetBlogInfo() {
 		return [
 			// Explicit cases.
 			'charset' => [
@@ -140,7 +140,7 @@ final class YoastTestCaseTest extends YoastTestCase {
 	 *
 	 * @return array<string, array<string, array<string, mixed>>>
 	 */
-	public function dataStubWpParseArgs() {
+	public static function dataStubWpParseArgs() {
 		return [
 			'two empty arrays' => [
 				'settings' => [],
@@ -221,7 +221,7 @@ final class YoastTestCaseTest extends YoastTestCase {
 	 *
 	 * @return array<string, array<string, string|bool>>
 	 */
-	public function dataStubWpStripAllTags() {
+	public static function dataStubWpStripAllTags() {
 		return [
 			'Empty string' => [
 				'text'          => '',
@@ -284,7 +284,7 @@ final class YoastTestCaseTest extends YoastTestCase {
 	 *
 	 * @return array<string, array<string, mixed>>
 	 */
-	public function dataStubWpSlash() {
+	public static function dataStubWpSlash() {
 		return [
 			'string' => [
 				'input' => "O'Reilly?",
@@ -322,7 +322,7 @@ final class YoastTestCaseTest extends YoastTestCase {
 	 *
 	 * @return array<string, array<string, mixed>>
 	 */
-	public function dataStubWpUnslash() {
+	public static function dataStubWpUnslash() {
 		return [
 			'string' => [
 				'input'    => "O\'Reilly\?",
