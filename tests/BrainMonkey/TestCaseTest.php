@@ -19,7 +19,7 @@ use Yoast\WPTestUtils\Tests\BrainMonkey\Fixtures\AvailableClass;
  *
  * @covers \Yoast\WPTestUtils\BrainMonkey\TestCase
  */
-class TestCaseTest extends TestCase {
+final class TestCaseTest extends TestCase {
 
 	/**
 	 * Verify that the basic BrainMonkey functionality has been made available.
@@ -273,7 +273,7 @@ class TestCaseTest extends TestCase {
 			'Class UnavailableClassB appears to already exist'
 		);
 
-		static::makeDoubleForUnavailableClass( UnavailableClassB::class );
+		self::makeDoubleForUnavailableClass( UnavailableClassB::class );
 
 		$unavailable_class           = new UnavailableClassB();
 		$unavailable_class->property = 10;
