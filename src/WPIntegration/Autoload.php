@@ -27,7 +27,7 @@ final class Autoload {
 	/**
 	 * A list of the classes this autoloader handles.
 	 *
-	 * @var string[] => true
+	 * @var array<string, true>
 	 */
 	private static $supported_classes = [
 		'PHPUnit\\Framework\\MockObject\\Builder\\NamespaceMatch'  => true,

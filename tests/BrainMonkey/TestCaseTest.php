@@ -182,7 +182,7 @@ class TestCaseTest extends TestCase {
 	/**
 	 * Data provider.
 	 *
-	 * @return array
+	 * @return array<string, array<string>>
 	 */
 	public function dataMakeDoubleForUnavailableClass() {
 		return [
@@ -218,7 +218,7 @@ class TestCaseTest extends TestCase {
 	/**
 	 * Data provider.
 	 *
-	 * @return array
+	 * @return array<string, array<string>>
 	 */
 	public function dataMakeDoubleForUnavailableClassThrowsExceptionWithInvalidName() {
 		return [
