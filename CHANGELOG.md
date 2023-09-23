@@ -9,6 +9,24 @@ This projects adheres to [Keep a CHANGELOG](http://keepachangelog.com/) and uses
 
 _Nothing yet._
 
+## [1.2.0] - 2023-09-27
+
+### Added
+
+* Support for the new PHPUnit `assertObjectHasProperty()` and `assertObjectNotHasProperty()` assertions, as polyfilled via the PHPUnit Polyfills in all test cases. PR [#64]
+    This means that the `assertObjectHasProperty()` and `assertObjectNotHasProperty()` assertions can now safely be used in all tests in classes which extend one of the WP Test Utils TestCases.
+
+### Changed
+* `Yoast\WPTestUtils\BrainMonkey\YoastTestCase`: the parameter names used in a few of the stubs for WP Core functions have been updated to stay in line with the names used in WP Core. PR [#53]
+* The [PHPUnit Polyfills] dependency has been updated to require [version `^1.1.0`](https://github.com/Yoast/PHPUnit-Polyfills/releases/tag/1.1.0) (was `^1.0.5`). PRs [#52], [#64]
+* Verified PHP 8.3 compatibility.
+* General housekeeping.
+
+[#52]: https://github.com/Yoast/wp-test-utils/pull/52
+[#53]: https://github.com/Yoast/wp-test-utils/pull/53
+[#64]: https://github.com/Yoast/wp-test-utils/pull/64
+
+
 ## [1.1.1] - 2022-11-17
 
 ### Fixed
@@ -68,7 +86,6 @@ See the [Make Core dev-note](https://make.wordpress.org/core/2021/09/27/changes-
 ### Fixes
 * The [PHPUnit Polyfills] dependency introduced three new polyfills in the `1.0.0` version. These are now supported in all test cases. [#17]
 
-
 Thanks [Pierre Gordon] and [Pascal Birchler] for making feature suggestions for this version.
 
 [#16]: https://github.com/Yoast/wp-test-utils/pull/16
@@ -118,6 +135,7 @@ Initial release.
 
 
 [Unreleased]: https://github.com/Yoast/wp-test-utils/compare/main...HEAD
+[1.2.0]: https://github.com/Yoast/wp-test-utils/compare/1.1.1...1.2.0
 [1.1.1]: https://github.com/Yoast/wp-test-utils/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/Yoast/wp-test-utils/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/Yoast/wp-test-utils/compare/0.2.2...1.0.0
