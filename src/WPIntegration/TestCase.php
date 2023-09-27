@@ -10,6 +10,7 @@ use Yoast\PHPUnitPolyfills\Polyfills\AssertFileEqualsSpecializations;
 use Yoast\PHPUnitPolyfills\Polyfills\AssertionRenames;
 use Yoast\PHPUnitPolyfills\Polyfills\AssertIsType;
 use Yoast\PHPUnitPolyfills\Polyfills\AssertObjectEquals;
+use Yoast\PHPUnitPolyfills\Polyfills\AssertObjectProperty;
 use Yoast\PHPUnitPolyfills\Polyfills\AssertStringContains;
 use Yoast\PHPUnitPolyfills\Polyfills\EqualToSpecializations;
 use Yoast\PHPUnitPolyfills\Polyfills\ExpectExceptionMessageMatches;
@@ -50,6 +51,7 @@ abstract class TestCase extends WP_UnitTestCase {
 	use AssertionRenames;
 	use AssertIsType;
 	use AssertObjectEquals;
+	use AssertObjectProperty;
 	use AssertStringContains;
 	use EqualToSpecializations;
 	use ExpectExceptionMessageMatches;
@@ -59,6 +61,8 @@ abstract class TestCase extends WP_UnitTestCase {
 
 	/**
 	 * Wrapper method for the `set_up_before_class()` method for forward-compatibility with WP 5.9.
+	 *
+	 * @return void
 	 */
 	public static function setUpBeforeClass() {
 		parent::setUpBeforeClass();
@@ -67,6 +71,8 @@ abstract class TestCase extends WP_UnitTestCase {
 
 	/**
 	 * Wrapper method for the `tear_down_after_class()` method for forward-compatibility with WP 5.9.
+	 *
+	 * @return void
 	 */
 	public static function tearDownAfterClass() {
 		static::tear_down_after_class();
@@ -75,6 +81,8 @@ abstract class TestCase extends WP_UnitTestCase {
 
 	/**
 	 * Wrapper method for the `set_up()` method for forward-compatibility with WP 5.9.
+	 *
+	 * @return void
 	 */
 	public function setUp() {
 		parent::setUp();
@@ -83,6 +91,8 @@ abstract class TestCase extends WP_UnitTestCase {
 
 	/**
 	 * Wrapper method for the `tear_down()` method for forward-compatibility with WP 5.9.
+	 *
+	 * @return void
 	 */
 	public function tearDown() {
 		$this->tear_down();
@@ -91,6 +101,8 @@ abstract class TestCase extends WP_UnitTestCase {
 
 	/**
 	 * Wrapper method for the `assert_pre_conditions()` method for forward-compatibility with WP 5.9.
+	 *
+	 * @return void
 	 */
 	protected function assertPreConditions() {
 		parent::assertPreConditions();
@@ -99,6 +111,8 @@ abstract class TestCase extends WP_UnitTestCase {
 
 	/**
 	 * Wrapper method for the `assert_post_conditions()` method for forward-compatibility with WP 5.9.
+	 *
+	 * @return void
 	 */
 	protected function assertPostConditions() {
 		parent::assertPostConditions();
@@ -107,31 +121,43 @@ abstract class TestCase extends WP_UnitTestCase {
 
 	/**
 	 * Placeholder method for forward-compatibility with WP 5.9.
+	 *
+	 * @return void
 	 */
 	public static function set_up_before_class() {}
 
 	/**
 	 * Placeholder method for forward-compatibility with WP 5.9.
+	 *
+	 * @return void
 	 */
 	public static function tear_down_after_class() {}
 
 	/**
 	 * Placeholder method for forward-compatibility with WP 5.9.
+	 *
+	 * @return void
 	 */
 	protected function set_up() {}
 
 	/**
 	 * Placeholder method for forward-compatibility with WP 5.9.
+	 *
+	 * @return void
 	 */
 	protected function tear_down() {}
 
 	/**
 	 * Placeholder method for forward-compatibility with WP 5.9.
+	 *
+	 * @return void
 	 */
 	protected function assert_pre_conditions() {}
 
 	/**
 	 * Placeholder method for forward-compatibility with WP 5.9.
+	 *
+	 * @return void
 	 */
 	protected function assert_post_conditions() {}
 }

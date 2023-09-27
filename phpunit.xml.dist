@@ -20,14 +20,14 @@
             <directory suffix=".php">./src/</directory>
             <exclude>
                 <file>./src/BrainMonkey/bootstrap.php</file>
-                <!-- The functionality within these files cannot be tested without installing WP. -->
-                <file>./src/WPIntegration/bootstrap-functions.php</file>
-                <file>./src/WPIntegration/Autoload.php</file>
+                <!-- The functionality for WP Integration tests cannot be tested without installing WP. -->
+                <directory suffix=".php">./src/WPIntegration/</directory>
             </exclude>
         </whitelist>
     </filter>
 
     <logging>
+        <log type="coverage-text" target="php://stdout" showOnlySummary="true"/>
         <log type="coverage-clover" target="build/logs/clover.xml"/>
     </logging>
 

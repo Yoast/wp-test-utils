@@ -19,7 +19,7 @@ use Yoast\WPTestUtils\Tests\BrainMonkey\Fixtures\AvailableClass;
  *
  * @covers \Yoast\WPTestUtils\BrainMonkey\TestCase
  */
-class TestCaseTest extends TestCase {
+final class TestCaseTest extends TestCase {
 
 	/**
 	 * Verify that the basic BrainMonkey functionality has been made available.
@@ -182,9 +182,9 @@ class TestCaseTest extends TestCase {
 	/**
 	 * Data provider.
 	 *
-	 * @return array
+	 * @return array<string, array<string>>
 	 */
-	public function dataMakeDoubleForUnavailableClass() {
+	public static function dataMakeDoubleForUnavailableClass() {
 		return [
 			'Global class name'                        => [ 'GlobalClassName' ],
 			'Global class name with leading backslash' => [ '\BackslashedClassName' ],
@@ -218,9 +218,9 @@ class TestCaseTest extends TestCase {
 	/**
 	 * Data provider.
 	 *
-	 * @return array
+	 * @return array<string, array<string>>
 	 */
-	public function dataMakeDoubleForUnavailableClassThrowsExceptionWithInvalidName() {
+	public static function dataMakeDoubleForUnavailableClassThrowsExceptionWithInvalidName() {
 		return [
 			'Empty string as class name'                       => [ '' ],
 			'Only backslashes'                                 => [ '\\\\\\' ],
@@ -273,7 +273,7 @@ class TestCaseTest extends TestCase {
 			'Class UnavailableClassB appears to already exist'
 		);
 
-		static::makeDoubleForUnavailableClass( UnavailableClassB::class );
+		self::makeDoubleForUnavailableClass( UnavailableClassB::class );
 
 		$unavailable_class           = new UnavailableClassB();
 		$unavailable_class->property = 10;

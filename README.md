@@ -4,6 +4,8 @@ WP Test Utils
 [![Version](https://poser.pugx.org/yoast/wp-test-utils/version)](https://packagist.org/packages/yoast/wp-test-utils)
 [![CS Build Status](https://github.com/Yoast/wp-test-utils/actions/workflows/cs.yml/badge.svg)](https://github.com/Yoast/wp-test-utils/actions/workflows/cs.yml)
 [![Test Build Status](https://github.com/Yoast/wp-test-utils/actions/workflows/test.yml/badge.svg)](https://github.com/Yoast/wp-test-utils/actions/workflows/test.yml)
+[![Coverage Status](https://coveralls.io/repos/github/Yoast/wp-test-utils/badge.svg?branch=develop)](https://coveralls.io/github/Yoast/wp-test-utils?branch=develop)
+
 [![Minimum PHP Version](https://img.shields.io/packagist/php-v/yoast/wp-test-utils.svg?maxAge=3600)](https://packagist.org/packages/yoast/wp-test-utils)
 [![License: BSD3](https://poser.pugx.org/yoast/wp-test-utils/license)](https://github.com/Yoast/wp-test-utils/blob/main/LICENSE)
 
@@ -33,7 +35,7 @@ Requirements
 * PHP 5.6 or higher.
 
 The following packages will be automatically required via Composer:
-* [PHPUnit Polyfills] 1.0.4 or higher.
+* [PHPUnit Polyfills] 1.1.0 or higher.
 * [PHPUnit] 5.7 - 9.x.
 * [BrainMonkey] 2.6.1 or higher.
 
@@ -171,6 +173,8 @@ To tell PHPUnit to use this bootstrap file, use `--bootstrap tests/bootstrap.php
 
 
 #### Helpers to create test doubles for unavailable classes
+
+> :bulb: The problem this feature solves has been fixed in Mockery 1.6.0, so if you use Mockery 1.6.0 or higher for test runs against PHP 8.2 or higher, you should no longer need this solution.
 
 ##### Why you may need to create test doubles for unavailable classes
 

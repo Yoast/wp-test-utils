@@ -16,7 +16,7 @@ use Yoast\WPTestUtils\Tests\Helpers\Fixtures\IncorrectOutputSingleExpectationTes
  *
  * @covers \Yoast\WPTestUtils\Helpers\ExpectOutputHelper
  */
-class ExpectOutputHelperTest extends TestCase {
+final class ExpectOutputHelperTest extends TestCase {
 
 	use AssertionRenames;
 	use AssertStringContains;
@@ -123,9 +123,9 @@ jumps over the lazy dog';
 	/**
 	 * Data provider.
 	 *
-	 * @return array
+	 * @return array<array<string>>
 	 */
-	public function dataMatchingSubstringsMismatchedLineEndings() {
+	public static function dataMatchingSubstringsMismatchedLineEndings() {
 		return [
 			// Actual line ending type.
 			[ "fox\njumps" ],
@@ -231,9 +231,9 @@ jumps over the lazy dog';
 	/**
 	 * Data provider for the `testNormalizeLineEndings()` test.
 	 *
-	 * @return array
+	 * @return array<string, array<string>>
 	 */
-	public function dataNormalizeLineEndings() {
+	public static function dataNormalizeLineEndings() {
 		return [
 			'already-lf'            => [ "foo\n\nbar\n", "foo\n\nbar\n" ],
 			'windows-crlf'          => [ "foo\r\n\r\nbar\r\n", "foo\n\nbar\n" ],

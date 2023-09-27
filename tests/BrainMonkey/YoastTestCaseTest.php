@@ -9,7 +9,7 @@ use Yoast\WPTestUtils\BrainMonkey\YoastTestCase;
  *
  * @covers \Yoast\WPTestUtils\BrainMonkey\YoastTestCase
  */
-class YoastTestCaseTest extends YoastTestCase {
+final class YoastTestCaseTest extends YoastTestCase {
 
 	/**
 	 * Verify the behaviour of the `get_bloginfo()` stub.
@@ -28,9 +28,9 @@ class YoastTestCaseTest extends YoastTestCase {
 	/**
 	 * Data provider.
 	 *
-	 * @return array
+	 * @return array<string, array<string, string>>
 	 */
-	public function dataStubGetBlogInfo() {
+	public static function dataStubGetBlogInfo() {
 		return [
 			// Explicit cases.
 			'charset' => [
@@ -125,9 +125,9 @@ class YoastTestCaseTest extends YoastTestCase {
 	 *
 	 * @dataProvider dataStubWpParseArgs
 	 *
-	 * @param array $settings Value for settings to pass to the function.
-	 * @param array $defaults Value for defaults to pass to the function.
-	 * @param array $expected Expected return value.
+	 * @param array<string, mixed> $settings Value for settings to pass to the function.
+	 * @param array<string, mixed> $defaults Value for defaults to pass to the function.
+	 * @param array<string, mixed> $expected Expected return value.
 	 *
 	 * @return void
 	 */
@@ -138,9 +138,9 @@ class YoastTestCaseTest extends YoastTestCase {
 	/**
 	 * Data provider.
 	 *
-	 * @return array
+	 * @return array<string, array<string, array<string, mixed>>>
 	 */
-	public function dataStubWpParseArgs() {
+	public static function dataStubWpParseArgs() {
 		return [
 			'two empty arrays' => [
 				'settings' => [],
@@ -219,9 +219,9 @@ class YoastTestCaseTest extends YoastTestCase {
 	/**
 	 * Data provider.
 	 *
-	 * @return array
+	 * @return array<string, array<string, string|bool>>
 	 */
-	public function dataStubWpStripAllTags() {
+	public static function dataStubWpStripAllTags() {
 		return [
 			'Empty string' => [
 				'text'          => '',
@@ -271,7 +271,7 @@ class YoastTestCaseTest extends YoastTestCase {
 	 *
 	 * @dataProvider dataStubWpSlash
 	 *
-	 * @param string $input Value to pass to the function.
+	 * @param mixed $input Value to pass to the function.
 	 *
 	 * @return void
 	 */
@@ -282,9 +282,9 @@ class YoastTestCaseTest extends YoastTestCase {
 	/**
 	 * Data provider.
 	 *
-	 * @return array
+	 * @return array<string, array<string, mixed>>
 	 */
-	public function dataStubWpSlash() {
+	public static function dataStubWpSlash() {
 		return [
 			'string' => [
 				'input' => "O'Reilly?",
@@ -308,8 +308,8 @@ class YoastTestCaseTest extends YoastTestCase {
 	 *
 	 * @dataProvider dataStubWpUnslash
 	 *
-	 * @param string $input    Value to pass to the function.
-	 * @param string $expected Expected return value.
+	 * @param mixed $input    Value to pass to the function.
+	 * @param mixed $expected Expected return value.
 	 *
 	 * @return void
 	 */
@@ -320,9 +320,9 @@ class YoastTestCaseTest extends YoastTestCase {
 	/**
 	 * Data provider.
 	 *
-	 * @return array
+	 * @return array<string, array<string, mixed>>
 	 */
-	public function dataStubWpUnslash() {
+	public static function dataStubWpUnslash() {
 		return [
 			'string' => [
 				'input'    => "O\'Reilly\?",
