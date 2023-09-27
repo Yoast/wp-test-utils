@@ -10,6 +10,7 @@ use Yoast\PHPUnitPolyfills\Polyfills\AssertFileEqualsSpecializations;
 use Yoast\PHPUnitPolyfills\Polyfills\AssertionRenames;
 use Yoast\PHPUnitPolyfills\Polyfills\AssertIsType;
 use Yoast\PHPUnitPolyfills\Polyfills\AssertObjectEquals;
+use Yoast\PHPUnitPolyfills\Polyfills\AssertObjectProperty;
 use Yoast\PHPUnitPolyfills\Polyfills\AssertStringContains;
 use Yoast\PHPUnitPolyfills\Polyfills\EqualToSpecializations;
 use Yoast\PHPUnitPolyfills\Polyfills\ExpectExceptionMessageMatches;
@@ -50,6 +51,7 @@ abstract class TestCase extends WP_UnitTestCase {
 	use AssertionRenames;
 	use AssertIsType;
 	use AssertObjectEquals;
+	use AssertObjectProperty;
 	use AssertStringContains;
 	use EqualToSpecializations;
 	use ExpectExceptionMessageMatches;
