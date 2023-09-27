@@ -174,6 +174,8 @@ To tell PHPUnit to use this bootstrap file, use `--bootstrap tests/bootstrap.php
 
 #### Helpers to create test doubles for unavailable classes
 
+> :bulb: The problem this feature solves has been fixed in Mockery 1.6.0, so if you use Mockery 1.6.0 or higher for test runs against PHP 8.2 or higher, you should no longer need this solution.
+
 ##### Why you may need to create test doubles for unavailable classes
 
 Typically a mock for an unavailable class is created using `Mockery::mock()` or `Mockery::mock( 'Unavailable' )`.
