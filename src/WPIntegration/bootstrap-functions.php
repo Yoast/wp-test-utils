@@ -42,7 +42,7 @@ function get_path_to_wp_test_dir() {
 	 *
 	 * @return string The file path with normalized slashes.
 	 */
-	$normalize_path = static function( $path ) {
+	$normalize_path = static function ( $path ) {
 		return \str_replace( '\\', '/', $path );
 	};
 

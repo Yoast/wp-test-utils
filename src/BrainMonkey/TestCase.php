@@ -81,10 +81,10 @@ TPL;
 			[
 				'__'         => null,
 				'_x'         => null,
-				'_n'         => static function( $single, $plural, $number ) {
+				'_n'         => static function ( $single, $plural, $number ) {
 					return ( $number === 1 ) ? $single : $plural;
 				},
-				'_nx'        => static function( $single, $plural, $number ) {
+				'_nx'        => static function ( $single, $plural, $number ) {
 					return ( $number === 1 ) ? $single : $plural;
 				},
 				'translate'  => null,
