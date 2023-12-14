@@ -1,27 +1,27 @@
 <?xml version="1.0"?>
 <ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Coding Standard for WP Test Utils" xsi:noNamespaceSchemaLocation="./vendor/squizlabs/php_codesniffer/phpcs.xsd">
-    <description>Check the code of WP Test Utils.</description>
+	<description>Check the code of WP Test Utils.</description>
 
-    <!--
-    #############################################################################
-    COMMAND LINE ARGUMENTS
-    https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-ruleset.xml
-    #############################################################################
-    -->
+	<!--
+	#############################################################################
+	COMMAND LINE ARGUMENTS
+	https://github.com/PHPCSStandards/PHP_CodeSniffer/wiki/Annotated-ruleset.xml
+	#############################################################################
+	-->
 
-    <file>.</file>
+	<file>.</file>
 
-    <!-- Only check PHP files. -->
-    <arg name="extensions" value="php"/>
+	<!-- Only check PHP files. -->
+	<arg name="extensions" value="php"/>
 
-    <!-- Show progress, show the error codes for each message (source). -->
-    <arg value="ps"/>
+	<!-- Show progress, show the error codes for each message (source). -->
+	<arg value="ps"/>
 
-    <!-- Strip the filepaths down to the relevant bit. -->
-    <arg name="basepath" value="./"/>
+	<!-- Strip the filepaths down to the relevant bit. -->
+	<arg name="basepath" value="./"/>
 
-    <!-- Check up to 8 files simultaneously. -->
-    <arg name="parallel" value="8"/>
+	<!-- Check up to 8 files simultaneously. -->
+	<arg name="parallel" value="8"/>
 
 	<!-- Cache the results between runs. -->
 	<arg name="cache" value="./.cache/phpcs.cache"/>
@@ -41,16 +41,25 @@
 			</property>
 		</properties>
 
-		<!-- Use CamelCaps file names to be more in line with the naming conventions used in PHPUnit. -->
-		<exclude name="Yoast.Files.FileName"/>
+		<!-- Exclude some rules which are irrelevant.
+			 The code in this package is not run in the context of a WordPress plugin. -->
+		<exclude name="WordPress.DB"/>
+		<exclude name="WordPress.Security"/>
+		<exclude name="WordPress.WP"/>
+		<exclude name="Yoast.Yoast.JsonEncodeAlternative"/>
+		<exclude name="WordPressVIPMinimum"/>
 
-		<!-- The code in this package is not run in the context of a plugin. -->
-		<exclude name="WordPress.WP.AlternativeFunctions"/>
-		<exclude name="Yoast.Yoast.AlternativeFunctions"/>
+		<!-- Exclude select "modern PHP" sniffs, which conflict with the minimum supported PHP version of this package. -->
+		<exclude name="Modernize.FunctionCalls.Dirname.Nested"/><!-- PHP 7.0+. -->
+		<exclude name="PSR12.Properties.ConstantVisibility"/><!-- PHP 7.1+. -->
+		<exclude name="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/><!-- PHP 7.1+. -->
 	</rule>
 
 	<!-- Enforce PSR1 compatible namespaces. -->
-	<rule ref="PSR1.Classes.ClassDeclaration"/>
+	<rule ref="PSR1.Classes.ClassDeclaration">
+		<!-- YoastCS only applies this rule to test files. Overrule it to apply to all files. -->
+		<include-pattern>*\.php</include-pattern>
+	</rule>
 
 
 	<!--
@@ -59,13 +68,21 @@
 	#############################################################################
 	-->
 
+	<rule ref="Yoast.Files.FileName">
+		<properties>
+			<property name="psr4_paths" type="array">
+				<element key="Yoast\WPTestUtils\Tests\\" value="tests/"/>
+			</property>
+		</properties>
+
+		<include-pattern>/tests/*\.php</include-pattern>
+	</rule>
+
 	<rule ref="Yoast.NamingConventions.NamespaceName">
 		<properties>
-			<property name="prefixes" type="array">
-				<element value="Yoast\WPTestUtils"/>
-			</property>
-			<property name="src_directory" type="array">
-				<element value="src"/>
+			<property name="psr4_paths" type="array">
+				<element key="Yoast\WPTestUtils\\" value="src/"/>
+				<element key="Yoast\WPTestUtils\Tests\\" value="tests/"/>
 			</property>
 		</properties>
 	</rule>
@@ -78,7 +95,7 @@
 
 	<rule ref="WordPress.PHP.NoSilencedErrors">
 		<properties>
-			<property name="custom_whitelist" type="array">
+			<property name="customAllowedFunctionsList" type="array">
 				<element value="file_exists"/>
 			</property>
 		</properties>
@@ -91,11 +108,6 @@
 	Exclude specific files for specific sniffs and/or exclude sub-groups in sniffs.
 	#############################################################################
 	-->
-
-	<!-- Allow filecomments in file which don't contain OO declarations. -->
-	<rule ref="Yoast.Commenting.FileComment.Unnecessary">
-		<exclude-pattern>/src/*/bootstrap*\.php$</exclude-pattern>
-	</rule>
 
 	<!-- Declaring a few WordPress native constants. -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound">
@@ -116,9 +128,16 @@
 		<exclude-pattern>/src/Helpers/*\.php$</exclude-pattern>
 	</rule>
 
-	<!-- Ignore word count for object names in tests. -->
+	<!-- TEST CODE -->
+
+	<!-- Final classes is irrelevant for test fixtures. -->
+	<rule ref="Universal.Classes.RequireFinalClass">
+		<exclude-pattern>/tests/*/Fixtures/*\.php$</exclude-pattern>
+	</rule>
+
+	<!-- Ignore word count for object names in test fixtures. -->
 	<rule ref="Yoast.NamingConventions.ObjectNameDepth.MaxExceeded">
-		<exclude-pattern>/tests/*\.php$</exclude-pattern>
+		<exclude-pattern>/tests/*/Fixtures/*\.php$</exclude-pattern>
 	</rule>
 
 	<!-- Test fixtures are not the actual tests. -->
