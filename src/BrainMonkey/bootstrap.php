@@ -39,7 +39,7 @@ if ( \function_exists( 'opcache_reset' ) ) {
  *
  * @see TestCase::makeDoubleForUnavailableClass()
  *
- * @param string[] $class_names List of class names to be "faked".
+ * @param array<string> $class_names List of class names to be "faked".
  *
  * @return void
  */
