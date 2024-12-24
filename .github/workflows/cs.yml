@@ -8,6 +8,10 @@ on:
   workflow_dispatch:
 
 jobs:
+  actionlint:
+    name: 'Lint GH Action workflows'
+    uses: Yoast/.github/.github/workflows/reusable-actionlint.yml@main
+
   checkcs:
     name: 'Basic CS and QA checks'
     runs-on: ubuntu-latest
