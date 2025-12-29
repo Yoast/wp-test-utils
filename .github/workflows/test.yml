@@ -43,7 +43,7 @@ jobs:
         uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # 2.36.0
         with:
           php-version: ${{ matrix.php }}
-          ini-values: error_reporting=E_ALL, display_errors=On
+          ini-values: zend.assertions=1, assert.exception=1, error_reporting=-1, display_errors=On, display_startup_errors=On
           coverage: ${{ matrix.coverage == true && 'xdebug' || 'none' }}
 
       # YoastCS 3.0 has a PHP 7.2 minimum which conflicts with the requirements of this package.
