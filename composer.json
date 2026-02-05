@@ -24,15 +24,18 @@
 	"homepage": "https://github.com/Yoast/wp-test-utils/",
 	"support": {
 		"issues": "https://github.com/Yoast/wp-test-utils/issues",
-		"source": "https://github.com/Yoast/wp-test-utils"
+		"source": "https://github.com/Yoast/wp-test-utils",
+		"security": "https://github.com/Yoast/wp-test-utils/security/policy"
 	},
 	"require": {
 		"php": ">=5.6",
-		"brain/monkey": "^2.6.1",
-		"yoast/phpunit-polyfills": "^1.1.0"
+		"brain/monkey": "^2.7.0",
+		"yoast/phpunit-polyfills": "^1.1.5"
 	},
 	"require-dev": {
-		"yoast/yoastcs": "^2.3.1"
+		"php-parallel-lint/php-console-highlighter": "^1.0.0",
+		"php-parallel-lint/php-parallel-lint": "^1.4.0",
+		"yoast/yoastcs": "^3.3.0"
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
@@ -53,7 +56,8 @@
 	"config": {
 		"allow-plugins": {
 			"dealerdirect/phpcodesniffer-composer-installer": true
-		}
+		},
+		"lock": false
 	},
 	"extra": {
 		"branch-alias": {

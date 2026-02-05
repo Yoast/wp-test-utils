@@ -19,45 +19,46 @@ jobs:
 
     strategy:
       matrix:
-        php: ['7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.3']
+        php: ['7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4', '8.6']
         coverage: [false]
 
         # Run code coverage only on high/low PHP.
         include:
         - php: 5.6
           coverage: true
-        - php: 8.2
+        - php: 8.5
           coverage: true
 
-    continue-on-error: ${{ matrix.php == '8.3' }}
+    continue-on-error: ${{ matrix.php == '8.6' }}
 
     name: "Tests: PHP ${{ matrix.php }}"
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          persist-credentials: false
 
       - name: Install PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # 2.36.0
         with:
           php-version: ${{ matrix.php }}
-          ini-values: error_reporting=E_ALL, display_errors=On
+          ini-values: zend.assertions=1, assert.exception=1, error_reporting=-1, display_errors=On, display_startup_errors=On
           coverage: ${{ matrix.coverage == true && 'xdebug' || 'none' }}
+        env:
+          fail-fast: true
+
+      # YoastCS 3.0 has a PHP 7.2 minimum which conflicts with the requirements of this package.
+      - name: 'Composer: remove YoastCS'
+        run: composer remove --dev yoast/yoastcs --no-update --no-interaction
 
       # Install dependencies and handle caching in one go.
-      # @link https://github.com/marketplace/actions/install-composer-dependencies
-      - name: Install Composer dependencies - normal
-        if: matrix.php != '8.3'
-        uses: "ramsey/composer-install@v2"
+      # @link https://github.com/marketplace/actions/install-php-dependencies-with-composer
+      - name: Install Composer dependencies
+        uses: "ramsey/composer-install@3cf229dc2919194e9e36783941438d17239e8520" # 3.1.1
         with:
-          # Bust the cache at least once a month - output format: YYYY-MM.
-          custom-cache-suffix: $(date -u "+%Y-%m")
-
-      - name: Install Composer dependencies - ignore PHP restrictions
-        if: matrix.php == '8.3'
-        uses: "ramsey/composer-install@v2"
-        with:
-          composer-options: --ignore-platform-req=php+
+          # For PHP "nightly", we need to install with ignore platform reqs as not all dependencies may allow it yet.
+          composer-options: ${{ matrix.php == '8.6' && '--ignore-platform-req=php+' || '' }}
           # Bust the cache at least once a month - output format: YYYY-MM.
           custom-cache-suffix: $(date -u "+%Y-%m")
 
@@ -72,34 +73,23 @@ jobs:
         if: ${{ matrix.coverage == true }}
         run: composer coverage
 
-      # PHP Coveralls doesn't fully support PHP 8.x yet, so switch the PHP version.
-      - name: Switch to PHP 7.4
-        if: ${{ success() && matrix.coverage == true && startsWith( matrix.php, '8' ) }}
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 7.4
-          coverage: none
-
-      # Global install is used to prevent a conflict with the local composer.lock in PHP 8.0+.
-      - name: Install Coveralls
-        if: ${{ success() && matrix.coverage == true }}
-        run: composer global require php-coveralls/php-coveralls:"^2.5.3" --no-interaction
-
       - name: Upload coverage results to Coveralls
         if: ${{ success() && matrix.coverage == true }}
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
-          COVERALLS_PARALLEL: true
-          COVERALLS_FLAG_NAME: php-${{ matrix.php }}
-        run: php-coveralls -v -x build/logs/clover.xml
+        uses: coverallsapp/github-action@5cbfd81b66ca5d10c19b062c04de0199c215fb6e # v2.3.7
+        with:
+          format: clover
+          file: build/logs/clover.xml
+          flag-name: php-${{ matrix.php }}
+          parallel: true
 
   coveralls-finish:
     needs: test
     runs-on: ubuntu-latest
 
+    name: Coveralls Finish
+
     steps:
       - name: Coveralls Finished
-        uses: coverallsapp/github-action@v2
+        uses: coverallsapp/github-action@5cbfd81b66ca5d10c19b062c04de0199c215fb6e # v2.3.7
         with:
-          github-token: ${{ secrets.COVERALLS_TOKEN }}
           parallel-finished: true

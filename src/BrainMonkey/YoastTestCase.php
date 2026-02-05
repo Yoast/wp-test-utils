@@ -24,7 +24,7 @@ abstract class YoastTestCase extends TestCase {
 		Monkey\Functions\stubs(
 			[
 				// Passing "null" makes the function return it's first argument.
-				'get_bloginfo'         => static function( $show ) {
+				'get_bloginfo'         => static function ( $show ) {
 					switch ( $show ) {
 						case 'charset':
 							return 'UTF-8';
@@ -34,14 +34,14 @@ abstract class YoastTestCase extends TestCase {
 
 					return $show;
 				},
-				'is_multisite'         => static function() {
+				'is_multisite'         => static function () {
 					if ( \defined( 'WP_TESTS_MULTISITE' ) ) {
 						return (bool) \WP_TESTS_MULTISITE;
 					}
 
 					return false;
 				},
-				'mysql2date'           => static function( $format, $date ) {
+				'mysql2date'           => static function ( $format, $date ) {
 					return $date;
 				},
 				'number_format_i18n'   => null,
@@ -51,7 +51,7 @@ abstract class YoastTestCase extends TestCase {
 				'wp_parse_args'        => static function ( $args, $defaults ) {
 					return \array_merge( $defaults, $args );
 				},
-				'wp_strip_all_tags'    => static function( $text, $remove_breaks = false ) {
+				'wp_strip_all_tags'    => static function ( $text, $remove_breaks = false ) {
 					$text = \preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $text );
 					$text = \strip_tags( $text );
 
@@ -62,7 +62,7 @@ abstract class YoastTestCase extends TestCase {
 					return \trim( $text );
 				},
 				'wp_slash'             => null,
-				'wp_unslash'           => static function( $value ) {
+				'wp_unslash'           => static function ( $value ) {
 					return \is_string( $value ) ? \stripslashes( $value ) : $value;
 				},
 			]

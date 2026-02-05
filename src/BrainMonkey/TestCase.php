@@ -81,10 +81,10 @@ TPL;
 			[
 				'__'         => null,
 				'_x'         => null,
-				'_n'         => static function( $single, $plural, $number ) {
+				'_n'         => static function ( $single, $plural, $number ) {
 					return ( $number === 1 ) ? $single : $plural;
 				},
-				'_nx'        => static function( $single, $plural, $number ) {
+				'_nx'        => static function ( $single, $plural, $number ) {
 					return ( $number === 1 ) ? $single : $plural;
 				},
 				'translate'  => null,
@@ -198,7 +198,7 @@ TPL;
 	 *
 	 * @see TestCase::makeDoubleForUnavailableClass()
 	 *
-	 * @param string[] $class_names List of class names to be "faked".
+	 * @param array<string> $class_names List of class names to be "faked".
 	 *
 	 * @return void
 	 */

@@ -1,13 +1,13 @@
 WP Test Utils
 =====================================================
 
-[![Version](https://poser.pugx.org/yoast/wp-test-utils/version)](https://packagist.org/packages/yoast/wp-test-utils)
+[![Version](https://img.shields.io/packagist/v/yoast/wp-test-utils)](https://packagist.org/packages/yoast/wp-test-utils)
 [![CS Build Status](https://github.com/Yoast/wp-test-utils/actions/workflows/cs.yml/badge.svg)](https://github.com/Yoast/wp-test-utils/actions/workflows/cs.yml)
 [![Test Build Status](https://github.com/Yoast/wp-test-utils/actions/workflows/test.yml/badge.svg)](https://github.com/Yoast/wp-test-utils/actions/workflows/test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/Yoast/wp-test-utils/badge.svg?branch=develop)](https://coveralls.io/github/Yoast/wp-test-utils?branch=develop)
 
 [![Minimum PHP Version](https://img.shields.io/packagist/php-v/yoast/wp-test-utils.svg?maxAge=3600)](https://packagist.org/packages/yoast/wp-test-utils)
-[![License: BSD3](https://poser.pugx.org/yoast/wp-test-utils/license)](https://github.com/Yoast/wp-test-utils/blob/main/LICENSE)
+[![License: BSD3](https://img.shields.io/packagist/l/yoast/wp-test-utils)](https://github.com/Yoast/wp-test-utils/blob/main/LICENSE)
 
 This library contains a set of utilities for running automated tests for WordPress plugins and themes.
 
@@ -35,9 +35,9 @@ Requirements
 * PHP 5.6 or higher.
 
 The following packages will be automatically required via Composer:
-* [PHPUnit Polyfills] 1.1.0 or higher.
+* [PHPUnit Polyfills] 1.1.5 or higher.
 * [PHPUnit] 5.7 - 9.x.
-* [BrainMonkey] 2.6.1 or higher.
+* [BrainMonkey] 2.7.0 or higher.
 
 
 Installation
