@@ -35,9 +35,9 @@ Requirements
 * PHP 5.6 or higher.
 
 The following packages will be automatically required via Composer:
-* [PHPUnit Polyfills] 1.1.0 or higher.
+* [PHPUnit Polyfills] 1.1.5 or higher.
 * [PHPUnit] 5.7 - 9.x.
-* [BrainMonkey] 2.6.1 or higher.
+* [BrainMonkey] 2.7.0 or higher.
 
 
 Installation

@@ -9,11 +9,24 @@ This projects adheres to [Keep a CHANGELOG](http://keepachangelog.com/) and uses
 
 _Nothing yet._
 
+## [1.2.1] - 2026-02-05
+
+### Changed
+* The [PHPUnit Polyfills] dependency has been updated to require [version `^1.1.5`](https://github.com/Yoast/PHPUnit-Polyfills/releases/tag/1.1.5) (was `^1.1.0`). PRs [#75], [#101]
+* The [BrainMonkey] dependency has been updated to require [version `^2.7.0`](https://github.com/Brain-WP/BrainMonkey/releases/tag/2.7.0) (was `^2.6.1`). PRs [#79], [#102]
+* Verified PHP 8.4 and 8.5 compatibility.
+* General housekeeping.
+
+[#75]: https://github.com/Yoast/wp-test-utils/pull/75
+[#79]: https://github.com/Yoast/wp-test-utils/pull/79
+[#101]: https://github.com/Yoast/wp-test-utils/pull/101
+[#102]: https://github.com/Yoast/wp-test-utils/pull/102
+
+
 ## [1.2.0] - 2023-09-27
 
 ### Added
-
-* Support for the new PHPUnit `assertObjectHasProperty()` and `assertObjectNotHasProperty()` assertions, as polyfilled via the PHPUnit Polyfills in all test cases. PR [#64]
+* Support for the new PHPUnit `assertObjectHasProperty()` and `assertObjectNotHasProperty()` assertions, as polyfilled via the [PHPUnit Polyfills] in all test cases. PR [#64]
     This means that the `assertObjectHasProperty()` and `assertObjectNotHasProperty()` assertions can now safely be used in all tests in classes which extend one of the WP Test Utils TestCases.
 
 ### Changed
