@@ -17,6 +17,7 @@ Release checklist
 - [ ] Close the milestone.
 - [ ] Open a new milestone for the next release.
 - [ ] If any open PRs/issues which were milestoned for the release did not make it into the release, update their milestone.
+- [ ] Fast-forward `develop` to be equal to `main`
 
 ## Announce
 
